@@ -1,10 +1,13 @@
 require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
 const authRoutes = require('./routes/auth');
+const msgRoutes = require('./routes/messages');
+const {loginRequired, ensureCorrectUser} = require('./middleware/auth'); 
 
 const PORT = 3001;
 
@@ -13,6 +16,7 @@ app.use(bodyParser.json());
 
 // Routes here
 app.use('/api/auth', authRoutes);
+app.use('/api/users/:id/messages', loginRequired, ensureCorrectUser, msgRoutes);
 
 app.use((req,res,next) => {
   let err = new Error('Not Found');

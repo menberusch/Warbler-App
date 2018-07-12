@@ -8,9 +8,7 @@ exports.signup = async function(req, res, next) {
     let token = jwt.sign(
       { 
         id, username, profileImageUrl 
-      },
-      process.env.SECRET_KEY
-    );
+      }, process.env.SECRET_KEY);
     return res.status(200).json({
       id, username, profileImageUrl, token
     });
@@ -34,9 +32,7 @@ exports.signin = async function(req, res, next) {
     let isMatch = await user.comparePassword(req.body.password);
     if(isMatch) {
       let token = jwt.sign({
-        id,
-        username,
-        profileImageUrl
+        id, username, profileImageUrl
       }, process.env.SECRET_KEY);
       return res.status(200).json({
         id,
