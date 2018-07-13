@@ -1,3 +1,6 @@
 # Warbler Server
 warbler-server/node_modules/
 warbler-server/.env
+
+# Wabler Client
+warbler-client/node_modules/
