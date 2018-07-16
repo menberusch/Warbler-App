@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const db = require('./models');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -7,7 +8,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
 const authRoutes = require('./routes/auth');
 const msgRoutes = require('./routes/messages');
-const {loginRequired, ensureCorrectUser} = require('./middleware/auth'); 
+const {loginRequired, ensureCorrectUser} = require('./middleware/auth');
 
 const PORT = 3001;
 
