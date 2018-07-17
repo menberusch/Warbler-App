@@ -28,7 +28,7 @@ export default class AuthForm extends Component {
   }
 
   render() {
-    const {email, username, password, profileImgUrl} = this.state;
+    const {email, username, profileImgUrl} = this.state;
     const {heading, buttonText, signUp, errors, history, removeError} = this.props;
     history.listen(() => { removeError(); });
     return(

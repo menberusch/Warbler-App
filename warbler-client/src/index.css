@@ -53,3 +53,31 @@ ul.nav.navbar-nav li {
   color: #fff;
   text-shadow: 0 0 8px #66757f;
 }
+
+#messages .list-group-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 7px 20px 12px;
+  position: relative;
+}
+
+#messages .list-group-item .message-area {
+  margin: 0 35px 0 10px;
+}
+#messages .list-group-item .btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 14px;
+}
+
+#messages:not(.no-hover) .list-group-item:hover {
+  background-color: #e6ecf0;
+}
+
+.timeline-image {
+  border-radius: 50px;
+  height: 48px;
+  width: 48px;
+  margin-top: 5px;
+}
