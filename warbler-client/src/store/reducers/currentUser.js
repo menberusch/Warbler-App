@@ -5,7 +5,7 @@ const DEFAULT_STATE = {
   user: {}
 };
 
-export default (state = DEFAULT_STATE, action) => {
+const currentUser = (state = DEFAULT_STATE, action) => {
   switch(action.type) {
     case SET_CURRENT_USER:
       return {
@@ -16,3 +16,5 @@ export default (state = DEFAULT_STATE, action) => {
       return state;
   }
 }
+
+export default currentUser;

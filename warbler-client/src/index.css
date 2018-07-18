@@ -80,4 +80,5 @@ ul.nav.navbar-nav li {
   height: 48px;
   width: 48px;
   margin-top: 5px;
+  object-fit: cover;
 }

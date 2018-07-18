@@ -3,6 +3,7 @@ import {SET_CURRENT_USER} from '../actionTypes';
 import {addError, removeError} from './errors';
 
 export function setCurrentUser(user) {
+  document.title = user.username ? `${user.username} | Warbler` : 'Warbler';
   return {
     type: SET_CURRENT_USER,
     user
@@ -28,7 +29,6 @@ export function authUser(type, userData) {
       .then(({token, ...user}) => {
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
-        console.log(user);
         dispatch(setCurrentUser(user));
         dispatch(removeError());
         resolve();
