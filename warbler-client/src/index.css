@@ -36,6 +36,7 @@ ul.nav.navbar-nav li {
   background-size: 100% 100%;
 }
 
+/*  */
 .home-hero {
   width: 100vw;
   height: 100vh;
@@ -81,4 +82,28 @@ ul.nav.navbar-nav li {
   width: 48px;
   margin-top: 5px;
   object-fit: cover;
+}
+
+form label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+form .btn {
+  margin: 20px auto 0;
+  width: 30%;
+}
+
+.card .lead {
+  font-size: 1rem;
+}
+.card .card-title {
+  font-weight: 700;
+}
+
+.card-img-left {
+  object-fit: cover;
+  width: 82px;
+  height: 82px;
+  margin: 10px;
 }

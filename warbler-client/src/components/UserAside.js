@@ -1,17 +1,22 @@
 import React from 'react';
 import DefaultProfileImage from '../images/default-profile-image.jpg';
+import {Link} from 'react-router-dom';
 
 const UserAside = ({profileImgUrl, username}) => (
-  <aside className="col-12 col-md-2">
-    <div className="panel panel-default">
-      <div className="panel-body">
-        <img
-          src={profileImgUrl || DefaultProfileImage} 
-          alt={username}
-          width="200"
-          height="200"
-          className="img-thumbnail"/>
+  <aside className="col-12 col-md-4">
+    <div className="card flex-row">
+      <img
+        src={profileImgUrl || DefaultProfileImage} 
+        alt={username}
+        className="card-img-left rounded-circle"/>
+      <div className="card-body align-self-end p-2">
+          <h5 className="card-title m-0">Vasyl Bryndas</h5>
+          <span className="lead">@{username}</span>
       </div>
+      <Link to="/" className="user-posts p-2">
+        <h6>Posts</h6>
+        <span>2</span>
+      </Link>
     </div>
   </aside>
 );

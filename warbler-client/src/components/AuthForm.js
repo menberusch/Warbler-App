@@ -7,7 +7,8 @@ export default class AuthForm extends Component {
       email: '',
       username: '',
       password: '',
-      profileImgUrl: ''
+      profileImgUrl: '',
+      fullname: ''
     };
   }
 
@@ -28,7 +29,7 @@ export default class AuthForm extends Component {
   }
 
   render() {
-    const {email, username, profileImgUrl} = this.state;
+    const {email, username, profileImgUrl, fullname} = this.state;
     const {heading, buttonText, signUp, errors, history, removeError} = this.props;
     history.listen(() => { removeError(); });
     return(
@@ -59,6 +60,15 @@ export default class AuthForm extends Component {
               />
               {signUp && (
                 <div>
+                  <label htmlFor="fullname">What is your full name?</label>
+                  <input 
+                    className="form-control" 
+                    id="fullname"
+                    name="fullname" 
+                    type="text" 
+                    onChange={this.handleChange} 
+                    value={fullname}
+                  />
                   <label htmlFor="username">Username:</label>
                   <input 
                     className="form-control" 
@@ -68,7 +78,7 @@ export default class AuthForm extends Component {
                     onChange={this.handleChange} 
                     value={username}
                   />
-                  <label htmlFor="image-url">Image URL:</label>
+                  <label htmlFor="image-url">Profile image url:</label>
                   <input 
                     className="form-control" 
                     id="image-url"

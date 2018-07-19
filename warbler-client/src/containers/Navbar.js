@@ -3,30 +3,70 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Logo from '../images/warbler-logo.png';
 import {logout} from '../store/actions/auth';
+import DefaultProfileImg from '../images/default-profile-image.jpg';
+import {Tooltip} from 'reactstrap';
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      profileTooltipOpen: false
+    };
+  }
+  
+  profileTooltip = () => {
+    console.log(this.state)
+    this.setState({
+      profileTooltipOpen: !this.state.profileTooltipOpen
+    });
+  }
+
   logout = e => {
     e.preventDefault();
     this.props.logout();
-  }
+  };
+
   render() {
+    let {isAuthenticated, user} = this.props.currentUser;
+    let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
     return(
       <nav className="navbar navbar-expand">
-        <div className="container-fluid">
+        <div className="container">
           <div className="navbar-header">
             <Link to="/" className="navbar-brand">
               <img src={Logo} alt="Warbler Home"/>
             </Link>
           </div>
-          {this.props.currentUser.isAuthenticated ? (
-            <ul className="nav navbar-nav navbar-right">
+          {isAuthenticated ? (
+            <ul className="nav navbar-nav navbar-right d-flex align-items-center">
               <li>
-                <Link to={`/users/${this.props.currentUser.user.id}/messages/new`}>
-                  New message
-                </Link>
+                <button
+                  className="rounded-circle"
+                  id="profile_button"
+                  style={{
+                    backgroundImage: `url(${profileImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    width: '40px',
+                    height: '40px',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}>
+                </button>
+                <Tooltip 
+                  placement="bottom"
+                  isOpen={this.state.profileTooltipOpen}
+                  target="profile_button"
+                  toggle={this.profileTooltip}>
+                  Profile and settings
+                </Tooltip>
+                {/* <a onClick={this.logout} href="/">Log out</a> */}
               </li>
               <li>
-                <a onClick={this.logout} href="/">Log out</a>
+                <Link to={`/users/${user.id}/messages/new`}>
+                  New message
+                </Link>
               </li>
             </ul>
           ) : (
