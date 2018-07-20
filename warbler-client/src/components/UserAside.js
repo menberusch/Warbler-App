@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultProfileImage from '../images/default-profile-image.jpg';
+import DefaultProfileImage from '../assets/images/default-profile-image.jpg';
 import {Link} from 'react-router-dom';
 
 const UserAside = ({profileImgUrl, username}) => (
@@ -14,8 +14,7 @@ const UserAside = ({profileImgUrl, username}) => (
           <span className="lead">@{username}</span>
       </div>
       <Link to="/" className="user-posts p-2">
-        <h6>Posts</h6>
-        <span>2</span>
+        <span class="icon-messages"></span>
       </Link>
     </div>
   </aside>

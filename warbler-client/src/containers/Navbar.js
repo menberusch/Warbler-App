@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import Logo from '../images/warbler-logo.png';
+import Logo from '../assets/images/warbler-logo.png';
 import {logout} from '../store/actions/auth';
-import DefaultProfileImg from '../images/default-profile-image.jpg';
+import DefaultProfileImg from '../assets/images/default-profile-image.jpg';
 import {Tooltip} from 'reactstrap';
 
 class Navbar extends Component {
@@ -31,17 +31,20 @@ class Navbar extends Component {
     let {isAuthenticated, user} = this.props.currentUser;
     let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
     return(
-      <nav className="navbar navbar-expand">
+      <nav className="navbar sticky-top navbar-expand">
         <div className="container">
-          <div className="navbar-header">
-            <Link to="/" className="navbar-brand">
-              <img src={Logo} alt="Warbler Home"/>
-            </Link>
-          </div>
+          <ul className="nav navbar-nav navbar-left">
+            <li><i className="icon-home"></i> Home</li>
+            <li><i className="icon-bell"></i> Notifications</li>
+            <li><i className="icon-mail"></i> Messages</li>
+          </ul>
+          <Link to="/" className="navbar-brand">
+            <img src={Logo} alt="Warbler Home"/>
+          </Link>
           {isAuthenticated ? (
             <ul className="nav navbar-nav navbar-right d-flex align-items-center">
               <li>
-                <button
+                <div
                   className="rounded-circle"
                   id="profile_button"
                   style={{
@@ -52,8 +55,10 @@ class Navbar extends Component {
                     height: '40px',
                     outline: 'none',
                     cursor: 'pointer'
-                  }}>
-                </button>
+                  }}
+                  // onClick={showUserSettings}  
+                >
+                </div>
                 <Tooltip 
                   placement="bottom"
                   isOpen={this.state.profileTooltipOpen}
