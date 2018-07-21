@@ -4,21 +4,29 @@ import {connect} from 'react-redux';
 import Logo from '../assets/images/warbler-logo.png';
 import {logout} from '../store/actions/auth';
 import DefaultProfileImg from '../assets/images/default-profile-image.jpg';
-import {Tooltip} from 'reactstrap';
+import {Tooltip, Popover, PopoverHeader, PopoverBody} from 'reactstrap';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      profileTooltipOpen: false
+      profileTooltipOpen: false,
+      profileSettingsOpen: false
     };
   }
   
-  profileTooltip = () => {
-    console.log(this.state)
+  toggleProfileTooltip = () => {
+    if(this.state.profileSettingsOpen) return;
     this.setState({
       profileTooltipOpen: !this.state.profileTooltipOpen
+    });
+  };
+
+  toggleProfileSettings = () => {
+    this.setState({
+      profileSettingsOpen: !this.state.profileSettingsOpen,
+      profileTooltipOpen: false
     });
   }
 
@@ -29,15 +37,17 @@ class Navbar extends Component {
 
   render() {
     let {isAuthenticated, user} = this.props.currentUser;
+    let {profileSettingsOpen, profileTooltipOpen} = this.state;
     let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
+
     return(
       <nav className="navbar sticky-top navbar-expand">
         <div className="container">
-          <ul className="nav navbar-nav navbar-left">
+          {/* <ul className="nav navbar-nav navbar-left">
             <li><i className="icon-home"></i> Home</li>
             <li><i className="icon-bell"></i> Notifications</li>
             <li><i className="icon-mail"></i> Messages</li>
-          </ul>
+          </ul> */}
           <Link to="/" className="navbar-brand">
             <img src={Logo} alt="Warbler Home"/>
           </Link>
@@ -45,7 +55,7 @@ class Navbar extends Component {
             <ul className="nav navbar-nav navbar-right d-flex align-items-center">
               <li>
                 <div
-                  className="rounded-circle"
+                  className="rounded-circle user-settings-btn"
                   id="profile_button"
                   style={{
                     backgroundImage: `url(${profileImg})`,
@@ -56,21 +66,51 @@ class Navbar extends Component {
                     outline: 'none',
                     cursor: 'pointer'
                   }}
-                  // onClick={showUserSettings}  
+                  onClick={this.toggleProfileSettings}  
                 >
                 </div>
+                <Popover 
+                  isOpen={profileSettingsOpen} 
+                  target="profile_button"
+                  placement="bottom"
+                  toggle={this.toggleProfileSettings}
+                >
+                  <PopoverHeader>@{user.username}</PopoverHeader>
+                  <PopoverBody>
+                    <ul className="profile-settings">
+                      <li>
+                        <Link 
+                          to={`/${user.username}`} 
+                          onClick={this.toggleProfileSettings}
+                        >
+                          <i className="icon-user"></i><span>&nbsp;Profile</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to='/' >
+                          <i className="icon-cog"></i><span>&nbsp;Settings</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <a href="/" onClick={this.logout}>
+                          <i className="icon-power"></i><span>&nbsp;Logout</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </PopoverBody>
+                </Popover>
                 <Tooltip 
                   placement="bottom"
-                  isOpen={this.state.profileTooltipOpen}
+                  isOpen={profileTooltipOpen}
                   target="profile_button"
-                  toggle={this.profileTooltip}>
+                  toggle={this.toggleProfileTooltip}>
                   Profile and settings
                 </Tooltip>
                 {/* <a onClick={this.logout} href="/">Log out</a> */}
               </li>
               <li>
                 <Link to={`/users/${user.id}/messages/new`}>
-                  New message
+                  New post
                 </Link>
               </li>
             </ul>

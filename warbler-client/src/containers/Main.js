@@ -7,6 +7,7 @@ import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import withAuth from '../hocs/withAuth';
 import MessageForm from './MessageForm';
+import Profilepage from '../components/Profilepage';
 
 const Main = props => {
   const {authUser, errors, removeError, currentUser} = props;
@@ -14,6 +15,7 @@ const Main = props => {
     <div className="container">
       <Switch>
         <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} />} />
+        <Route exact path="/:username" render={props => <Profilepage currentUser={currentUser} {...props} />} />
         <Route exact path="/signin" render={props => (
           <AuthForm 
             onAuth={authUser} 

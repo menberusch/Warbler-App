@@ -8,8 +8,16 @@ class MessageList extends Component {
     this.props.fetchMessages();
   }
   render() {
+    const profilepage = this.props.profilepage ? true : false;
     const {messages, removeMessage, currentUser} = this.props;
-    let messageList = messages.map(m => (
+    let messagesCopy;
+
+    if(profilepage) 
+      messagesCopy = messages.filter(m => m.user.username === currentUser.username) 
+    else 
+      messagesCopy = messages.slice();
+
+    let messageList = messagesCopy.map(m => (
       <MessageItem 
         key={m._id} 
         date={m.createAt}
@@ -17,15 +25,13 @@ class MessageList extends Component {
         username={m.user.username}
         profileImgUrl={m.user.profileImgUrl}
         removeMessage={removeMessage.bind(this, m.user._id, m._id)}
-        isCurrentUser={currentUser === m.user._id}
+        isCurrentUser={currentUser.id === m.user._id}
       />
     ));
     return (
-      <div className="row col-12 col-md-6">
-          <ul className="list-group w-100" id="messages">
-            {messageList}
-          </ul>
-      </div>
+      <ul className="list-group w-100" id="messages">
+        {messageList}
+      </ul>
     );
   }
 };
@@ -33,7 +39,7 @@ class MessageList extends Component {
 function mapStateToProps(state) {
   return {
     messages: state.messages,
-    currentUser: state.currentUser.user.id
+    currentUser: state.currentUser.user
   };
 };
 

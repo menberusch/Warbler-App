@@ -1,8 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import MessageTimeline from './MessageTimeline';
+import MessageList from '../containers/MessageList';
+import UserAside from './UserAside';
 
 const Homepage = ({currentUser}) => {
+  document.title = 'Warbler';
   if(!currentUser.isAuthenticated) {
     return (
       <div className="home-hero">
@@ -15,8 +17,12 @@ const Homepage = ({currentUser}) => {
     );
   };
   return (
-    <div>
-      <MessageTimeline profileImgUrl={currentUser.user.profileImgUrl} username={currentUser.user.username}/>
+    <div className="row">
+      <UserAside {...currentUser.user} />
+      <div className="col-12 col-md-6">
+        <MessageList />
+      </div>
+      {/* <MessageTimeline profileImgUrl={currentUser.user.profileImgUrl} username={currentUser.user.username}/> */}
     </div>
   );
 };

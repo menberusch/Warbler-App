@@ -108,7 +108,9 @@
 body {
   background-color: #e6ecf0;
 }
-
+.popover-body {
+  padding: 0;
+}
 /* Nav */
 
 .navbar {
@@ -213,4 +215,33 @@ form .btn {
   width: 82px;
   height: 82px;
   margin: 10px;
+}
+
+.profile-settings {
+  list-style: none;
+  font-size: 16px;
+  color: #66757f;
+  margin: 0;
+  padding: 0;
+}
+.profile-settings li a{
+  padding: .3rem .75rem;
+  transition: all .15s ease-out;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  display: block;
+}
+.profile-settings li a:hover {
+  color: #fff;
+  background: #50b5d6;
+}
+.profile-settings i {
+  font-size: 22px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.profile-settings span {
+  vertical-align: middle;
 }
