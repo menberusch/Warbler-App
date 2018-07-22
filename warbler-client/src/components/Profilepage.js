@@ -11,6 +11,7 @@ class Profilepage extends Component {
       activeTab: 'posts'
     };
     document.title = `@${props.currentUser.user.username} | Warbler`;
+    console.log(props);
   };
 
   toggleTab(tab) {

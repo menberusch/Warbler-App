@@ -136,13 +136,55 @@ body {
   border-radius: 2px;
 }
 
-ul.nav.navbar-nav li {
+ul.nav.navbar-right li {
   margin: 0 0.5rem;
 }
 
 .onboarding > .navbar {
   background-image: url("./assets/images/nav-bg.png");
   background-size: 100% 100%;
+}
+.navbar-left {
+  color: #c3f9ea;
+}
+.navbar-left a {
+  font-weight: inherit;
+  font-size: 16px;
+  padding: 10px 20px;
+  color: inherit;
+  text-shadow: 0px 2px 16px rgba(150, 150, 150, 1);
+  position: relative;
+  transition: all .15s ease-out;
+}
+.navbar-left .underline {
+  height: 3px;
+  background-color: transparent;
+  margin-top: 2px;
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  width: 100%;
+  transition: all .15s ease-out;
+}
+.navbar-left a:hover {
+  text-decoration: none;
+}
+.navbar-left a:hover .underline {
+  background-color: #fff;
+}
+.navbar-left i {
+  font-size: 21px;
+  vertical-align: middle;
+}
+.navbar-left span {
+  vertical-align: middle;
+}
+
+.navbar-left li.active {
+  color: #fff;
+}
+.navbar-left li.active .underline{
+  background-color: #fff;
 }
 
 /*  */
@@ -229,7 +271,6 @@ form .btn {
   transition: all .15s ease-out;
   text-decoration: none;
   color: inherit;
-  width: 100%;
   display: block;
 }
 .profile-settings li a:hover {
@@ -244,4 +285,8 @@ form .btn {
 
 .profile-settings span {
   vertical-align: middle;
+}
+
+.profile-settings-popover {
+  min-width: 192px;
 }

@@ -16,13 +16,13 @@ const Homepage = ({currentUser}) => {
       </div>
     );
   };
+  console.log(currentUser);
   return (
     <div className="row">
       <UserAside {...currentUser.user} />
       <div className="col-12 col-md-6">
         <MessageList />
       </div>
-      {/* <MessageTimeline profileImgUrl={currentUser.user.profileImgUrl} username={currentUser.user.username}/> */}
     </div>
   );
 };

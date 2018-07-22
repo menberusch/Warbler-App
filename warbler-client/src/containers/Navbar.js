@@ -39,15 +39,30 @@ class Navbar extends Component {
     let {isAuthenticated, user} = this.props.currentUser;
     let {profileSettingsOpen, profileTooltipOpen} = this.state;
     let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
-
+    
     return(
       <nav className="navbar sticky-top navbar-expand">
         <div className="container">
-          {/* <ul className="nav navbar-nav navbar-left">
-            <li><i className="icon-home"></i> Home</li>
-            <li><i className="icon-bell"></i> Notifications</li>
-            <li><i className="icon-mail"></i> Messages</li>
-          </ul> */}
+          <ul className="nav navbar-nav navbar-left">
+            <li className={document.location.pathname === '/' ? 'active' : ''}>
+              <Link to="/">
+                <i className="icon-home"></i> <span>Home</span>
+                <div className="underline"></div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/">
+                <i className="icon-bell"></i> <span>Notifications</span>
+                <div className="underline"></div>
+              </Link>
+            </li>
+            <li>
+              <Link to="/">
+                <i className="icon-mail"></i> <span>Messages</span>
+                <div className="underline"></div>
+              </Link>
+            </li>
+          </ul>
           <Link to="/" className="navbar-brand">
             <img src={Logo} alt="Warbler Home"/>
           </Link>
@@ -72,8 +87,9 @@ class Navbar extends Component {
                 <Popover 
                   isOpen={profileSettingsOpen} 
                   target="profile_button"
-                  placement="bottom"
+                  placement="bottom-end"
                   toggle={this.toggleProfileSettings}
+                  className="profile-settings-popover"
                 >
                   <PopoverHeader>@{user.username}</PopoverHeader>
                   <PopoverBody>

@@ -15,7 +15,6 @@ const Main = props => {
     <div className="container">
       <Switch>
         <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} />} />
-        <Route exact path="/:username" render={props => <Profilepage currentUser={currentUser} {...props} />} />
         <Route exact path="/signin" render={props => (
           <AuthForm 
             onAuth={authUser} 
@@ -37,6 +36,7 @@ const Main = props => {
             removeError={removeError}
           />
         )} />
+        <Route exact path="/:username" render={props => <Profilepage currentUser={currentUser} {...props} />} />
         <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
       </Switch>
     </div>
