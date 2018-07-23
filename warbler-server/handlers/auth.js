@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async function(req, res, next) {
   try {
+    if(req.body.username === 'signin' || req.body.username === 'signup')
+      throw new Error("You can't use this username.");
     let user = await db.User.create(req.body);
     let {id, username, profileImgUrl, messages} = user;
     let token = jwt.sign(

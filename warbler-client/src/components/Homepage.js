@@ -16,7 +16,6 @@ const Homepage = ({currentUser}) => {
       </div>
     );
   };
-  console.log(currentUser);
   return (
     <div className="row">
       <UserAside {...currentUser.user} />

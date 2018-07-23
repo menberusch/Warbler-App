@@ -12,8 +12,15 @@ class Navbar extends Component {
 
     this.state = {
       profileTooltipOpen: false,
-      profileSettingsOpen: false
+      profileSettingsOpen: false,
+      location: document.location.pathname
     };
+
+    props.history.listen(({pathname}) => {
+      this.setState(prevState => (
+        prevState.location !== pathname ? {location: pathname} : ''
+      ));
+    });
   }
   
   toggleProfileTooltip = () => {
@@ -37,32 +44,34 @@ class Navbar extends Component {
 
   render() {
     let {isAuthenticated, user} = this.props.currentUser;
-    let {profileSettingsOpen, profileTooltipOpen} = this.state;
+    let {profileSettingsOpen, profileTooltipOpen, location} = this.state;
     let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
     
     return(
       <nav className="navbar sticky-top navbar-expand">
         <div className="container">
-          <ul className="nav navbar-nav navbar-left">
-            <li className={document.location.pathname === '/' ? 'active' : ''}>
-              <Link to="/">
-                <i className="icon-home"></i> <span>Home</span>
-                <div className="underline"></div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <i className="icon-bell"></i> <span>Notifications</span>
-                <div className="underline"></div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/">
-                <i className="icon-mail"></i> <span>Messages</span>
-                <div className="underline"></div>
-              </Link>
-            </li>
-          </ul>
+          {isAuthenticated && (
+            <ul className="nav navbar-nav navbar-left">
+              <li className={location === '/' ? 'active' : ''}>
+                <Link to="/">
+                  <i className="icon-home"></i> <span>Home</span>
+                  <div className="underline"></div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/">
+                  <i className="icon-bell"></i> <span>Notifications</span>
+                  <div className="underline"></div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/">
+                  <i className="icon-mail"></i> <span>Messages</span>
+                  <div className="underline"></div>
+                </Link>
+              </li>
+            </ul>
+          )}
           <Link to="/" className="navbar-brand">
             <img src={Logo} alt="Warbler Home"/>
           </Link>
@@ -122,7 +131,6 @@ class Navbar extends Component {
                   toggle={this.toggleProfileTooltip}>
                   Profile and settings
                 </Tooltip>
-                {/* <a onClick={this.logout} href="/">Log out</a> */}
               </li>
               <li>
                 <Link to={`/users/${user.id}/messages/new`}>

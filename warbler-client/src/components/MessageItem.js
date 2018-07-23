@@ -8,7 +8,7 @@ const MessageItem = ({date, profileImgUrl, text, username, removeMessage, isCurr
     <li className="list-group-item">
       <img src={profileImgUrl || DefaultProfileImg} alt="username" height="100" width="100" className="timeline-image"/>
       <div className="message-area">
-        <Link to="/">@{username} &nbsp;</Link>
+        <Link to={`/${username}`}>@{username} &nbsp;</Link>
         <span className="text-muted">
           <Moment className="text-muted" format="Do MMM YYYY">
             {date}

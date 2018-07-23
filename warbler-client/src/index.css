@@ -182,6 +182,7 @@ ul.nav.navbar-right li {
 
 .navbar-left li.active {
   color: #fff;
+  pointer-events: none;
 }
 .navbar-left li.active .underline{
   background-color: #fff;
