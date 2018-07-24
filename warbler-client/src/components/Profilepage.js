@@ -51,7 +51,7 @@ class Profilepage extends Component {
               <Row>
                 <Col sm="12">
                   <MessageList 
-                    profilepage 
+                    profilepage
                     profileImgUrl={currentUser.user.profileImgUrl} 
                     username={currentUser.user.username}
                   />

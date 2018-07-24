@@ -5,11 +5,11 @@ import MessageItem from '../components/MessageItem';
 
 class MessageList extends Component {
   componentDidMount() {
+    console.log(this.props)
     this.props.fetchMessages();
   }
   render() {
-    const profilepage = this.props.profilepage ? true : false;
-    const {messages, removeMessage, currentUser} = this.props;
+    const {messages, removeMessage, currentUser, profilepage} = this.props;
     let messagesCopy;
 
     if(profilepage) 
@@ -24,7 +24,7 @@ class MessageList extends Component {
         text={m.text}
         username={m.user.username}
         profileImgUrl={m.user.profileImgUrl}
-        removeMessage={removeMessage.bind(this, m.user._id, m._id)}
+        removeMessage={removeMessage.bind(this, m._id)}
         isCurrentUser={currentUser.id === m.user._id}
       />
     ));
