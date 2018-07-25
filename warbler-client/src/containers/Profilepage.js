@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
-import MessageList from '../containers/MessageList';
+import {connect} from 'react-redux';
+import {fetchUser} from '../store/actions/users';
+import MessageList from './MessageList';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
-import UserAside from './UserAside';
+import UserAside from '../components/UserAside';
 
 class Profilepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 'posts'
+      activeTab: 'posts',
+      user: ''
     };
     console.log(props);
     document.title = `@${props.currentUser.user.username} | Warbler`;
   };
+
+  componentDidMount() {
+    this.props.fetchUser(this.props.match.params.username);
+  }
 
   toggleTab(tab) {
     if(this.state.activeTab !== tab) {
@@ -72,4 +79,10 @@ class Profilepage extends Component {
   };
 };
 
-export default Profilepage;
+function mapStateToProps(state) {
+  return {
+
+  };
+}
+
+export default connect(mapStateToProps, {fetchUser})(Profilepage);

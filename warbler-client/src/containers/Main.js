@@ -7,7 +7,7 @@ import {authUser} from '../store/actions/auth';
 import {removeError} from '../store/actions/errors';
 import withAuth from '../hocs/withAuth';
 import MessageForm from './MessageForm';
-import Profilepage from '../components/Profilepage';
+import Profilepage from './Profilepage';
 
 const Main = props => {
   const {authUser, errors, removeError, currentUser} = props;

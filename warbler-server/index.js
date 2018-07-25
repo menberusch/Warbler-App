@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 // Routes here
 app.use('/api/auth', authRoutes);
 app.use('/api/users/:id/messages', loginRequired, ensureCorrectUser, msgRoutes);
-app.use('/api/user', loginRequired, userRoutes);
+app.use('/api/user', userRoutes);
 
 app.get('/api/messages', loginRequired, async function(req, res, next) {
   try {
