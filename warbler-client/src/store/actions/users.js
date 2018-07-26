@@ -10,7 +10,7 @@ export const getUser = user => ({
 export const fetchUser = (username) => {
   return dispatch => (
     apiCall('get', `/api/user/${username}`)
-      .then(data => console.log(data))
+      .then(data => dispatch(getUser(data)))
       .catch(err => dispatch(addError(err)))  
   );
 };

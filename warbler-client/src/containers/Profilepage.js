@@ -11,15 +11,17 @@ class Profilepage extends Component {
     super(props);
     this.state = {
       activeTab: 'posts',
-      user: ''
+      user: false
     };
-    console.log(props);
-    document.title = `@${props.currentUser.user.username} | Warbler`;
   };
 
   componentDidMount() {
-    this.props.fetchUser(this.props.match.params.username);
-  }
+    this.props.fetchUser(this.props.match.params.username)
+    .then(() => {
+      document.title = `@${this.props.user.username} | Warbler`;
+      this.setState({user: this.props.user});
+    });
+  };
 
   toggleTab(tab) {
     if(this.state.activeTab !== tab) {
@@ -30,50 +32,57 @@ class Profilepage extends Component {
   };
   
   render() {
-    const {currentUser} = this.props;
+    const {user} = this.state;
     return(
-      <div className="row">
-        <UserAside {...currentUser.user}/>
-        <div className="col-12 col-md-6">
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({active: this.state.activeTab === 'posts'})}
-                onClick={() => {this.toggleTab('posts')}}
-              >
-                Posts
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({active: this.state.activeTab === 'following'})}
-                onClick={() => {this.toggleTab('following')}}
-              >
-                Following
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="posts">
-              <Row>
-                <Col sm="12">
-                  <MessageList 
-                    profilepage
-                    profileImgUrl={currentUser.user.profileImgUrl} 
-                    username={currentUser.user.username}
-                  />
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="following">
-              <Row>
-                <Col sm="12">
-                  <h4>You are not following anyone...</h4>
-                </Col>
-              </Row>
-            </TabPane>
-          </TabContent>
-        </div>
+      <div>
+        {!user ? (
+          <div className="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          <div className="row">
+            <UserAside {...user}/>
+            <div className="col-12 col-md-6">
+              <Nav tabs>
+                <NavItem>
+                  <NavLink
+                    className={classnames({active: this.state.activeTab === 'posts'})}
+                    onClick={() => {this.toggleTab('posts')}}
+                  >
+                    Posts
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classnames({active: this.state.activeTab === 'following'})}
+                    onClick={() => {this.toggleTab('following')}}
+                  >
+                    Following
+                  </NavLink>
+                </NavItem>
+              </Nav>
+              <TabContent activeTab={this.state.activeTab}>
+                <TabPane tabId="posts">
+                  <Row>
+                    <Col sm="12">
+                      <MessageList profilepage user={user} />
+                    </Col>
+                  </Row>
+                </TabPane>
+                <TabPane tabId="following">
+                  <Row>
+                    <Col sm="12">
+                      <h4>You are not following anyone...</h4>
+                    </Col>
+                  </Row>
+                </TabPane>
+              </TabContent>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -81,7 +90,7 @@ class Profilepage extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    user: state.users
   };
 }
 

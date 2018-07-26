@@ -5,15 +5,14 @@ import MessageItem from '../components/MessageItem';
 
 class MessageList extends Component {
   componentDidMount() {
-    console.log(this.props)
     this.props.fetchMessages();
   }
   render() {
-    const {messages, removeMessage, currentUser, profilepage} = this.props;
+    const {messages, removeMessage, user, currentUser, profilepage} = this.props;
     let messagesCopy;
 
     if(profilepage) 
-      messagesCopy = messages.filter(m => m.user.username === currentUser.username) 
+      messagesCopy = messages.filter(m => m.user.username === user.username) 
     else 
       messagesCopy = messages.slice();
 
