@@ -6,7 +6,7 @@ import DefaultProfileImg from '../assets/images/default-profile-image.jpg';
 const MessageItem = ({date, profileImgUrl, text, username, removeMessage, isCurrentUser}) => (
   <div>
     <li className="list-group-item">
-      <img src={profileImgUrl || DefaultProfileImg} alt="username" height="100" width="100" className="timeline-image"/>
+      <img src={profileImgUrl || DefaultProfileImg} alt="username" height="100" width="100" className="timeline-image" />
       <div className="message-area">
         <Link to={`/${username}`}>@{username} &nbsp;</Link>
         <span className="text-muted">

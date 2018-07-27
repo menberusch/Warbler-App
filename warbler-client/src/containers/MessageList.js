@@ -5,28 +5,38 @@ import MessageItem from '../components/MessageItem';
 
 class MessageList extends Component {
   componentDidMount() {
-    this.props.fetchMessages();
+    if(!this.props.userProfile) {
+      this.props.fetchMessages();
+    }
   }
   render() {
-    const {messages, removeMessage, user, currentUser, profilepage} = this.props;
-    let messagesCopy;
-
-    if(profilepage) 
-      messagesCopy = messages.filter(m => m.user.username === user.username) 
+    const {messages, userProfile, removeMessage, currentUser} = this.props;
+    let messageList;
+    if(userProfile) 
+      messageList = userProfile.messages.map(m => (
+        <MessageItem 
+          key={m._id} 
+          date={m.createAt}
+          text={m.text}
+          username={userProfile.username}
+          profileImgUrl={userProfile.profileImgUrl}
+          removeMessage={removeMessage.bind(this, m.user, m._id)}
+          isCurrentUser={currentUser.id === m.user}
+        />
+      )); 
     else 
-      messagesCopy = messages.slice();
+      messageList = messages.map(m => (
+        <MessageItem 
+          key={m._id} 
+          date={m.createAt}
+          text={m.text}
+          username={m.user.username}
+          profileImgUrl={m.user.profileImgUrl}
+          removeMessage={removeMessage.bind(this, m.user._id, m._id)}
+          isCurrentUser={currentUser.id === m.user._id}
+        />
+      ));
 
-    let messageList = messagesCopy.map(m => (
-      <MessageItem 
-        key={m._id} 
-        date={m.createAt}
-        text={m.text}
-        username={m.user.username}
-        profileImgUrl={m.user.profileImgUrl}
-        removeMessage={removeMessage.bind(this, m._id)}
-        isCurrentUser={currentUser.id === m.user._id}
-      />
-    ));
     return (
       <ul className="list-group w-100" id="messages">
         {messageList}

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col} from 'reactstrap';
+import classnames from 'classnames';
 import {fetchUser} from '../store/actions/users';
 import MessageList from './MessageList';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
-import classnames from 'classnames';
 import UserAside from '../components/UserAside';
 
 class Profilepage extends Component {
@@ -68,7 +68,7 @@ class Profilepage extends Component {
                 <TabPane tabId="posts">
                   <Row>
                     <Col sm="12">
-                      <MessageList profilepage user={user} />
+                      <MessageList userProfile={user} />
                     </Col>
                   </Row>
                 </TabPane>
