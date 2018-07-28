@@ -9,7 +9,7 @@ exports.signup = async function(req, res, next) {
     let {id, username, profileImgUrl, messages} = user;
     let token = jwt.sign(
       { 
-        id, username, profileImgUrl
+        id, username, profileImgUrl, messages
       }, process.env.SECRET_KEY);
     return res.status(200).json({
       id, username, profileImgUrl, messages, token

@@ -3,11 +3,9 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import withAuth from '../hocs/withAuth';
+import withMessages from '../hocs/withMessages';
 
 import {authUser} from '../store/actions/auth';
-import {removeError} from '../store/actions/errors';
-import {fetchMessages} from '../store/actions/messages';
-import {fetchUser} from '../store/actions/users';
 
 import MessageForm from './MessageForm';
 import Profilepage from './Profilepage';
@@ -18,22 +16,11 @@ import Homepage from '../components/Homepage';
 const Main = ({
   authUser, 
   errors, 
-  removeError, 
-  currentUser, 
-  fetchMessages, 
-  fetchUser,
-  messages
+  removeError
 }) => (
   <div className="container">
     <Switch>
-      <Route exact path="/" render={props => (
-        <Homepage 
-          fetchMessages={fetchMessages}
-          messages={messages}
-          currentUser={currentUser} 
-          {...props} 
-        />
-      )} />
+      <Route exact path="/" component={withMessages(Homepage)} />
       <Route exact path="/signin" render={props => (
         <AuthForm 
           onAuth={authUser} 
@@ -55,14 +42,8 @@ const Main = ({
           removeError={removeError}
         />
       )} />
-      <Route path="/:username" render={props => (
-        <Profilepage 
-          fetchUser={fetchUser}
-          currentUser={currentUser}
-          {...props} 
-        />
-      )} />
       <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
+      <Route path="/:username" component={withMessages(Profilepage, true)} />
     </Switch>
   </div>
 );
@@ -70,12 +51,8 @@ const Main = ({
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    user: state.user,
-    messages: state.messages,
     errors: state.errors
   };
 };
 
-export default withRouter(connect(mapStateToProps, {
-  authUser, removeError, fetchMessages, fetchUser
-})(Main));
+export default withRouter(connect(mapStateToProps, {authUser})(Main));

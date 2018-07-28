@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
 import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col} from 'reactstrap';
 import classnames from 'classnames';
-import {fetchUser} from '../store/actions/users';
 import MessageList from './MessageList';
 import UserAside from '../components/UserAside';
 
@@ -10,17 +8,8 @@ class Profilepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: 'posts',
-      user: false
+      activeTab: 'posts'
     };
-  };
-
-  componentDidMount() {
-    this.props.fetchUser(this.props.match.params.username)
-    .then(() => {
-      document.title = `@${this.props.user.username} | Warbler`;
-      this.setState({user: this.props.user});
-    });
   };
 
   toggleTab(tab) {
@@ -32,17 +21,17 @@ class Profilepage extends Component {
   };
   
   render() {
-    const {user} = this.state;
+    const {user, userMessages} = this.props;
     return(
-      <div>
-        {!user ? (
-          <div className="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        ) : (
+      // <div>
+      //   {!user ? (
+      //     <div className="lds-ring">
+      //       <div></div>
+      //       <div></div>
+      //       <div></div>
+      //       <div></div>
+      //     </div>
+      //   ) : (
           <div className="row">
             <UserAside {...user}/>
             <div className="col-12 col-md-6">
@@ -68,7 +57,7 @@ class Profilepage extends Component {
                 <TabPane tabId="posts">
                   <Row>
                     <Col sm="12">
-                      <MessageList userProfile={user} />
+                      <MessageList user={user} messages={userMessages} />
                     </Col>
                   </Row>
                 </TabPane>
@@ -82,16 +71,10 @@ class Profilepage extends Component {
               </TabContent>
             </div>
           </div>
-        )}
-      </div>
+        // )}
+      // </div>
     );
   };
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.users
-  };
-}
-
-export default connect(mapStateToProps, {fetchUser})(Profilepage);
+export default Profilepage;

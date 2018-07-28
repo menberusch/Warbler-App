@@ -30,7 +30,8 @@ export default class AuthForm extends Component {
   render() {
     const {email, username, profileImgUrl} = this.state;
     const {heading, buttonText, signUp, errors, history, removeError} = this.props;
-    history.listen(() => { removeError(); });
+    
+    if(removeError) history.listen(() => { removeError(); });
     return(
       <div>
         <div className="row justify-content-md-center text-center">

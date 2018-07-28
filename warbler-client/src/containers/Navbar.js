@@ -45,7 +45,7 @@ class Navbar extends Component {
   render() {
     let {isAuthenticated, user} = this.props.currentUser;
     let {profileSettingsOpen, profileTooltipOpen, location} = this.state;
-    let profileImg = user.profileImgUrl ? user.profileImgUrl : DefaultProfileImg; 
+    let profileImg = user.profileImgUrl || DefaultProfileImg; 
     
     return(
       <nav className="navbar sticky-top navbar-expand">
@@ -82,7 +82,7 @@ class Navbar extends Component {
                   className="rounded-circle user-settings-btn"
                   id="profile_button"
                   style={{
-                    backgroundImage: `url(${profileImg})`,
+                    backgroundImage: `url('${profileImg}')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     width: '40px',
@@ -123,14 +123,14 @@ class Navbar extends Component {
                       </li>
                     </ul>
                   </PopoverBody>
+                  <Tooltip 
+                    placement="bottom"
+                    isOpen={profileTooltipOpen}
+                    target="profile_button"
+                    toggle={this.toggleProfileTooltip}>
+                    Profile and settings
+                  </Tooltip>
                 </Popover>
-                <Tooltip 
-                  placement="bottom"
-                  isOpen={profileTooltipOpen}
-                  target="profile_button"
-                  toggle={this.toggleProfileTooltip}>
-                  Profile and settings
-                </Tooltip>
               </li>
               <li>
                 <Link to={`/users/${user.id}/messages/new`}>

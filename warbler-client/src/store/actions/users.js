@@ -8,6 +8,7 @@ export const getUser = user => ({
 });
 
 export const fetchUser = (username) => {
+  console.log(username);
   return dispatch => (
     apiCall('get', `/api/user/${username}`)
       .then(data => dispatch(getUser(data)))

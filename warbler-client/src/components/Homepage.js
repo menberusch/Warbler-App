@@ -5,25 +5,27 @@ import UserAside from './UserAside';
 
 class Homepage extends Component {
   render() {
-    const {currentUser} = this.props;
+    const {user, isAuthenticated, allMessages} = this.props;
     document.title = 'Warbler';
-    if(!currentUser.isAuthenticated) {
+
+    if(isAuthenticated) {
       return (
-        <div className="home-hero">
-          <h1>What's up?</h1>
-          <h4>New to Warbler?</h4>
-          <Link to="signup" className="btn btn-primary">
-            Sign up, here!
-          </Link>
+        <div className="row">
+          <UserAside {...user} />
+          <div className="col-12 col-md-6">
+            <MessageList messages={allMessages} />
+          </div>
         </div>
       );
     };
+    
     return (
-      <div className="row">
-        <UserAside {...currentUser.user} />
-        <div className="col-12 col-md-6">
-          <MessageList />
-        </div>
+      <div className="home-hero">
+        <h1>What's up?</h1>
+        <h4>New to Warbler?</h4>
+        <Link to="signup" className="btn btn-primary">
+          Sign up, here!
+        </Link>
       </div>
     );
   };
