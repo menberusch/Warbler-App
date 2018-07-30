@@ -8,7 +8,7 @@ class MessageList extends Component {
 
   render() {
     const {messages, user, removeMessage, currentUser, fetchUser} = this.props;
-    console.log(fetchUser);
+
     const messageList = messages.map(m => (
       <MessageItem 
         key={m._id} 

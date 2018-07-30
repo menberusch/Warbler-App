@@ -115,18 +115,16 @@ body {
 
 .navbar {
   margin-bottom: 1rem;
-}
-
-.navbar a {
+  & a {
     font-weight: bold;
     color: white;
   }
-
-.navbar a:hover {
+  a:hover {
     color: white;
     text-decoration: underline;
     cursor: pointer;
   }
+}
 
 .navbar-brand > img {
   display: inline-block;
@@ -233,8 +231,7 @@ ul.nav.navbar-right li {
   height: 48px;
   width: 48px;
   margin-top: 5px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 form label {
@@ -255,8 +252,7 @@ form .btn {
 }
 
 .card-img-left {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: 82px;
   height: 82px;
   margin: 10px;
@@ -312,39 +308,23 @@ form .btn {
   margin: 6px;
   border: 6px solid #50b5d6;
   border-radius: 50%;
-  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #50b5d6 transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
-  -webkit-animation-delay: -0.45s;
-          animation-delay: -0.45s;
+  animation-delay: -0.45s;
 }
 .lds-ring div:nth-child(2) {
-  -webkit-animation-delay: -0.3s;
-          animation-delay: -0.3s;
+  animation-delay: -0.3s;
 }
 .lds-ring div:nth-child(3) {
-  -webkit-animation-delay: -0.15s;
-          animation-delay: -0.15s;
-}
-@-webkit-keyframes lds-ring {
-  0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
+  animation-delay: -0.15s;
 }
 @keyframes lds-ring {
   0% {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

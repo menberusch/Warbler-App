@@ -24,7 +24,7 @@ export default class AuthForm extends Component {
       this.props.history.push('/');
     }).catch(() => {
       return;
-    })
+    });
   }
 
   render() {

@@ -1,6 +1,6 @@
 import {GET_USER} from '../actionTypes';
 
-const users = (state=false, action) => {
+const users = (state={}, action) => {
   switch(action.type) {
     case GET_USER:
       return action.user;

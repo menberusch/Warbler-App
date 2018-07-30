@@ -8,10 +8,10 @@ import withMessages from '../hocs/withMessages';
 import {authUser} from '../store/actions/auth';
 
 import MessageForm from './MessageForm';
-import Profilepage from './Profilepage';
 
 import AuthForm from '../components/AuthForm';
 import Homepage from '../components/Homepage';
+import Profilepage from '../components/Profilepage';
 
 const Main = ({
   authUser, 
