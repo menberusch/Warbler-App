@@ -40,6 +40,7 @@ class Navbar extends Component {
   logout = e => {
     e.preventDefault();
     this.props.logout();
+    this.setState({profileSettingsOpen: false});
   };
 
   render() {
@@ -58,7 +59,7 @@ class Navbar extends Component {
                   <div className="underline"></div>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/">
                   <i className="icon-bell"></i> <span>Notifications</span>
                   <div className="underline"></div>
@@ -69,7 +70,7 @@ class Navbar extends Component {
                   <i className="icon-mail"></i> <span>Messages</span>
                   <div className="underline"></div>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           )}
           <Link to="/" className="navbar-brand">
@@ -92,37 +93,6 @@ class Navbar extends Component {
                   }}
                   onClick={this.toggleProfileSettings}  
                 >
-                </div>
-                <Popover 
-                  isOpen={profileSettingsOpen} 
-                  target="profile_button"
-                  placement="bottom-end"
-                  toggle={this.toggleProfileSettings}
-                  className="profile-settings-popover"
-                >
-                  <PopoverHeader>@{user.username}</PopoverHeader>
-                  <PopoverBody>
-                    <ul className="profile-settings">
-                      <li>
-                        <Link 
-                          to={`/${user.username}`} 
-                          onClick={this.toggleProfileSettings}
-                        >
-                          <i className="icon-user"></i><span>&nbsp;Profile</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to='/' >
-                          <i className="icon-cog"></i><span>&nbsp;Settings</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <a href="/" onClick={this.logout}>
-                          <i className="icon-power"></i><span>&nbsp;Logout</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </PopoverBody>
                   <Tooltip 
                     placement="bottom"
                     isOpen={profileTooltipOpen}
@@ -130,7 +100,41 @@ class Navbar extends Component {
                     toggle={this.toggleProfileTooltip}>
                     Profile and settings
                   </Tooltip>
-                </Popover>
+                  <Popover 
+                    isOpen={profileSettingsOpen} 
+                    target="profile_button"
+                    placement="bottom-end"
+                    toggle={this.toggleProfileSettings}
+                    className="profile-settings-popover"
+                  >
+                    <PopoverHeader>@{user.username}</PopoverHeader>
+                    <PopoverBody>
+                      <ul className="profile-settings">
+                        <li>
+                          <Link 
+                            to={`/${user.username}`} 
+                            onClick={this.toggleProfileSettings}
+                          >
+                            <i className="icon-user"></i><span>&nbsp;Profile</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <Link 
+                            to='/settings' 
+                            onClick={this.toggleProfileSettings}
+                          >
+                            <i className="icon-cog"></i><span>&nbsp;Settings</span>
+                          </Link>
+                        </li>
+                        <li>
+                          <a href="/" onClick={this.logout}>
+                            <i className="icon-power"></i><span>&nbsp;Logout</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </PopoverBody>
+                  </Popover>
+                </div>
               </li>
               <li>
                 <Link to={`/users/${user.id}/messages/new`}>

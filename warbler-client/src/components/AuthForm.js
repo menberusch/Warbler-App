@@ -6,8 +6,8 @@ export default class AuthForm extends Component {
     this.state = {
       email: '',
       username: '',
-      password: '',
-      profileImgUrl: ''
+      password: ''
+      // profileImgUrl: ''
     };
   }
 
@@ -22,7 +22,8 @@ export default class AuthForm extends Component {
     const authType = this.props.signUp ? 'signup' : 'signin';
     this.props.onAuth(authType, this.state).then(() => {
       this.props.history.push('/');
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
       return;
     });
   }
@@ -69,7 +70,7 @@ export default class AuthForm extends Component {
                     onChange={this.handleChange} 
                     value={username}
                   />
-                  <label htmlFor="image-url">Profile image url:</label>
+                  {/* <label htmlFor="image-url">Profile image url:</label>
                   <input 
                     className="form-control" 
                     id="image-url"
@@ -77,7 +78,7 @@ export default class AuthForm extends Component {
                     type="text" 
                     onChange={this.handleChange} 
                     value={profileImgUrl}
-                  />
+                  /> */}
                 </div>
                 )
               }

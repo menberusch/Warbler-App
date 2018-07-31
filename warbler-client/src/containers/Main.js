@@ -8,6 +8,7 @@ import withMessages from '../hocs/withMessages';
 import {authUser} from '../store/actions/auth';
 
 import MessageForm from './MessageForm';
+import Settings from './Settings';
 
 import AuthForm from '../components/AuthForm';
 import Homepage from '../components/Homepage';
@@ -42,6 +43,7 @@ const Main = ({
           removeError={removeError}
         />
       )} />
+      <Route path="/settings" component={withAuth(Settings)} />
       <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
       <Route path="/:username" component={withMessages(Profilepage, true)} />
     </Switch>
