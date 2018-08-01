@@ -1,6 +1,7 @@
 @import 'icon-font';
 @import 'Navbar';
 @import 'loader';
+@import 'UserAside';
 
 body {
   background-color: #e6ecf0;
@@ -27,24 +28,24 @@ body {
   text-shadow: 0 0 8px #66757f;
 }
 
-#messages .list-group-item {
+#posts .list-group-item {
   display: flex;
   align-items: flex-start;
   padding: 7px 20px 12px;
   position: relative;
 }
 
-#messages .list-group-item .message-area {
+#posts .list-group-item .post-area {
   margin: 0 35px 0 10px;
 }
-#messages .list-group-item .btn {
+#posts .list-group-item .btn {
   position: absolute;
   right: 5px;
   top: 5px;
   font-size: 14px;
 }
 
-#messages:not(.no-hover) .list-group-item:hover {
+#posts:not(.no-hover) .list-group-item:hover {
   background-color: #e6ecf0;
 }
 
@@ -54,20 +55,6 @@ body {
   width: 48px;
   margin-top: 5px;
   object-fit: cover;
-}
-
-.card .lead {
-  font-size: 1rem;
-}
-.card .card-title {
-  font-weight: 700;
-}
-
-.card-img-left {
-  object-fit: cover;
-  width: 82px;
-  height: 82px;
-  margin: 10px;
 }
 
 .profile-settings {

@@ -16,11 +16,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  name: String,
+  birthday: Date,
   profileImgUrl: String,
-  messages: [
+  posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Message"
+      ref: "Post"
     }
   ]
 });

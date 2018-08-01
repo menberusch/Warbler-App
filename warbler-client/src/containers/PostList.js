@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {removeMessage} from '../store/actions/messages';
-import MessageItem from '../components/MessageItem';
+import {removePost} from '../store/actions/posts';
+import PostItem from '../components/PostItem';
 import {fetchUser} from '../store/actions/users';
 
-class MessageList extends Component {
+class PostList extends Component {
 
   render() {
-    const {messages, user, removeMessage, currentUser, fetchUser} = this.props;
+    const {posts, user, removePost, currentUser, fetchUser} = this.props;
 
-    const messageList = messages.map(m => (
-      <MessageItem 
+    const postList = posts.map(m => (
+      <PostItem 
         key={m._id} 
         date={m.createAt}
         text={m.text}
         username={m.user.username ? m.user.username : user.username}
         profileImgUrl={m.user.profileImgUrl || !user ? m.user.profileImgUrl : user.profileImgUrl}
-        removeMessage={()=>{
-          removeMessage(m.user._id ? m.user._id : user._id, m._id);
+        removePost={()=>{
+          removePost(m.user._id ? m.user._id : user._id, m._id);
           fetchUser(m.user.username ? m.user.username : user.username);
         }}
         isCurrentUser={m.user._id ? 
@@ -28,8 +28,8 @@ class MessageList extends Component {
     ));
 
     return (
-      <ul className="list-group w-100" id="messages">
-        {messageList}
+      <ul className="list-group w-100" id="posts">
+        {postList}
       </ul>
     );
   }
@@ -41,4 +41,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, {removeMessage, fetchUser})(MessageList);
+export default connect(mapStateToProps, {removePost, fetchUser})(PostList);

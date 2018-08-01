@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 class Settings extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     document.title = 'Warbler / Settings';
   }
   render() {
@@ -30,7 +29,7 @@ class Settings extends Component {
             <input className="form-control" type="date" id="edit_birthday"/>
             <small className="form-text text-muted">This should be your date of birth</small>
           </div>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <button type="submit" className="btn btn-primary">Save changes</button>
         </form>
       </div>
     )

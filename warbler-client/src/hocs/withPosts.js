@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchMessages} from '../store/actions/messages';
+import {fetchPosts} from '../store/actions/posts';
 import {fetchUser} from '../store/actions/users';
 
-export default function withMessages(ComponentToBeRendered, profilepage=false) {
-  class MessagesProvider extends Component {
+export default function withPosts(ComponentToBeRendered, profilepage=false) {
+  class PostsProvider extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -13,7 +13,7 @@ export default function withMessages(ComponentToBeRendered, profilepage=false) {
     }
 
     async componentDidMount() {
-      const {fetchUser, fetchMessages, currentUser, match} = this.props;
+      const {fetchUser, fetchPosts, currentUser, match} = this.props;
       
       if(profilepage) {
         await fetchUser(match.params.username);
@@ -21,7 +21,7 @@ export default function withMessages(ComponentToBeRendered, profilepage=false) {
         this.setState({isLoading: false});
         
       } else if(currentUser.isAuthenticated){
-        await fetchMessages();
+        await fetchPosts();
         await fetchUser(currentUser.user.username);
         this.setState({isLoading: false});
 
@@ -31,16 +31,16 @@ export default function withMessages(ComponentToBeRendered, profilepage=false) {
     };
 
     loadedProps = () => {
-      const {currentUser, user, messages} = this.props;
+      const {currentUser, user, posts} = this.props;
 
       if(currentUser.isAuthenticated) {
         return profilepage ? {
           user: user,
-          userMessages: user.messages
+          userPosts: user.posts
         } : {
           isAuthenticated: currentUser.isAuthenticated,
           user: user,
-          allMessages: messages
+          allPosts: posts
         };
       } else {
         return {currentUser}
@@ -56,7 +56,7 @@ export default function withMessages(ComponentToBeRendered, profilepage=false) {
       let componentProps;
 
       if(!isLoading) componentProps = this.loadedProps();
-      console.log(componentProps);
+      
       return(
         <div>
           {isLoading ? (
@@ -79,10 +79,10 @@ export default function withMessages(ComponentToBeRendered, profilepage=false) {
   function mapStateToProps(state) {
     return {
       currentUser: state.currentUser,
-      messages: state.messages,
+      posts: state.posts,
       user: state.users
     }
   }
 
-  return connect(mapStateToProps, {fetchUser, fetchMessages})(MessagesProvider);
+  return connect(mapStateToProps, {fetchUser, fetchPosts})(PostsProvider);
 }

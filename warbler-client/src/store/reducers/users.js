@@ -6,7 +6,7 @@ const users = (state={}, action) => {
       return action.user;
     default:
       return state;
-  };
+  }
 };
 
 export default users;

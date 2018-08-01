@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {postNewMessage} from '../store/actions/messages';
+import {postNewPost} from '../store/actions/posts';
 
-class MessageForm extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: ''
+      post: ''
     };
   };
 
-  handleNewMessage = e => {
+  handleNewPost = e => {
     e.preventDefault();
-    this.props.postNewMessage(this.state.message);
-    this.setState({message: ''});
+    this.props.postNewPost(this.state.post);
+    this.setState({post: ''});
     this.props.history.push('/');
   };
 
   render() {
     return(
-      <form onSubmit={this.handleNewMessage} className="clearfix">
-        {this.props.errors.message && (
+      <form onSubmit={this.handleNewPost} className="clearfix">
+        {this.props.errors.post && (
           <div className="alert alert-danger">
             {this.props.errors}
           </div>
@@ -28,11 +28,11 @@ class MessageForm extends Component {
         <input 
           type="text" 
           className="form-control" 
-          value={this.state.message}
-          onChange={e => this.setState({message: e.target.value})}
+          value={this.state.post}
+          onChange={e => this.setState({post: e.target.value})}
         />
         <button type="submit" className="btn btn-success float-right">
-          Send message.
+          Send post.
         </button>
       </form>
     )
@@ -45,4 +45,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {postNewMessage})(MessageForm);
+export default connect(mapStateToProps, {postNewPost})(PostForm);

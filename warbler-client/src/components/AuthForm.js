@@ -7,8 +7,16 @@ export default class AuthForm extends Component {
       email: '',
       username: '',
       password: ''
-      // profileImgUrl: ''
     };
+    this.unlisten = props.history.listen(() => { 
+      props.removeError();
+      this.setState({
+        email: '',
+        username: '',
+        password: ''
+      });
+      this.refs.password.value = '';
+    });
   }
 
   handleChange = e => {
@@ -21,18 +29,17 @@ export default class AuthForm extends Component {
     e.preventDefault();
     const authType = this.props.signUp ? 'signup' : 'signin';
     this.props.onAuth(authType, this.state).then(() => {
+      this.unlisten();
       this.props.history.push('/');
     }).catch((err) => {
-      console.log(err);
       return;
     });
   }
 
   render() {
-    const {email, username, profileImgUrl} = this.state;
-    const {heading, buttonText, signUp, errors, history, removeError} = this.props;
-    
-    if(removeError) history.listen(() => { removeError(); });
+    const {email, username} = this.state;
+    const {heading, buttonText, signUp, errors} = this.props;
+
     return(
       <div>
         <div className="row justify-content-md-center text-center">
@@ -57,7 +64,8 @@ export default class AuthForm extends Component {
                 id="password"
                 name="password" 
                 type="password" 
-                onChange={this.handleChange} 
+                ref="password"
+                onChange={this.handleChange}
               />
               {signUp && (
                 <div>
@@ -70,15 +78,6 @@ export default class AuthForm extends Component {
                     onChange={this.handleChange} 
                     value={username}
                   />
-                  {/* <label htmlFor="image-url">Profile image url:</label>
-                  <input 
-                    className="form-control" 
-                    id="image-url"
-                    name="profileImgUrl" 
-                    type="text" 
-                    onChange={this.handleChange} 
-                    value={profileImgUrl}
-                  /> */}
                 </div>
                 )
               }

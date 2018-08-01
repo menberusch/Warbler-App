@@ -3,16 +3,16 @@ const jwt = require('jsonwebtoken');
 
 exports.signup = async function(req, res, next) {
   try {
-    if(req.body.username === 'signin' || req.body.username === 'signup')
+    if(req.body.username === 'signin' || req.body.username === 'signup' || req.body.username === 'settings')
       throw new Error("You can't use this username.");
     let user = await db.User.create(req.body);
-    let {id, username, profileImgUrl, messages} = user;
+    let {id, username, profileImgUrl, posts, birthday} = user;
     let token = jwt.sign(
       { 
-        id, username, profileImgUrl, messages
+        id, username, profileImgUrl, posts, birthday
       }, process.env.SECRET_KEY);
     return res.status(200).json({
-      id, username, profileImgUrl, messages, token
+      id, username, profileImgUrl, posts, birthday, token
     });
   } catch (err) {
     if(err.code === 11000) {
@@ -30,17 +30,18 @@ exports.signin = async function(req, res, next) {
     let user = await db.User.findOne({
       email: req.body.email
     });
-    let {id, username, profileImgUrl, messages} = user;
+    let {id, username, profileImgUrl, posts, birthday} = user;
     let isMatch = await user.comparePassword(req.body.password);
     if(isMatch) {
       let token = jwt.sign({
-        id, username, profileImgUrl, messages
+        id, username, profileImgUrl, posts, birthday
       }, process.env.SECRET_KEY);
       return res.status(200).json({
         id,
         username,
         profileImgUrl,
-        messages,
+        posts,
+        birthday,
         token
       });
     } else {

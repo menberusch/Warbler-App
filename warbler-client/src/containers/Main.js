@@ -3,11 +3,12 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import withAuth from '../hocs/withAuth';
-import withMessages from '../hocs/withMessages';
+import withPosts from '../hocs/withPosts';
 
 import {authUser} from '../store/actions/auth';
+import {removeError} from '../store/actions/errors';
 
-import MessageForm from './MessageForm';
+import PostForm from './PostForm';
 import Settings from './Settings';
 
 import AuthForm from '../components/AuthForm';
@@ -21,7 +22,7 @@ const Main = ({
 }) => (
   <div className="container">
     <Switch>
-      <Route exact path="/" component={withMessages(Homepage)} />
+      <Route exact path="/" component={withPosts(Homepage)} />
       <Route exact path="/signin" render={props => (
         <AuthForm 
           onAuth={authUser} 
@@ -44,8 +45,8 @@ const Main = ({
         />
       )} />
       <Route path="/settings" component={withAuth(Settings)} />
-      <Route path="/users/:id/messages/new" component={withAuth(MessageForm)} />
-      <Route path="/:username" component={withMessages(Profilepage, true)} />
+      <Route path="/users/:id/posts/new" component={withAuth(PostForm)} />
+      <Route path="/:username" component={withPosts(Profilepage, true)} />
     </Switch>
   </div>
 );
@@ -57,4 +58,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default withRouter(connect(mapStateToProps, {authUser})(Main));
+export default withRouter(connect(mapStateToProps, {authUser, removeError})(Main));

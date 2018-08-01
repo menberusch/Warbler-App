@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import currentUser from './currentUser';
 import errors from './errors';
-import messages from './messages';
+import posts from './posts';
 import users from './users';
 
 // Location change update
@@ -12,7 +12,7 @@ import users from './users';
 const rootReducer = combineReducers({
   currentUser,
   errors,
-  messages,
+  posts,
   users
   // changeLocation
 });

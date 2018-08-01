@@ -264,6 +264,44 @@
   }
 }
 
+.card .lead {
+  font-size: 1rem;
+}
+
+.card .card-title {
+  font-weight: 700;
+}
+
+.card-img-left {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 82px;
+  height: 82px;
+  margin: 10px;
+}
+
+.user-posts-icon {
+  font-size: 24px;
+  position: relative;
+  margin: 10px 15px 0 0;
+  display: block;
+}
+
+.user-posts-icon__count {
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+  }
+
+.user-posts-icon:hover {
+    text-decoration: none;
+  }
+
 body {
   background-color: #e6ecf0;
 }
@@ -290,25 +328,25 @@ body {
   text-shadow: 0 0 8px #66757f;
 }
 
-#messages .list-group-item {
+#posts .list-group-item {
   display: flex;
   align-items: flex-start;
   padding: 7px 20px 12px;
   position: relative;
 }
 
-#messages .list-group-item .message-area {
+#posts .list-group-item .post-area {
   margin: 0 35px 0 10px;
 }
 
-#messages .list-group-item .btn {
+#posts .list-group-item .btn {
   position: absolute;
   right: 5px;
   top: 5px;
   font-size: 14px;
 }
 
-#messages:not(.no-hover) .list-group-item:hover {
+#posts:not(.no-hover) .list-group-item:hover {
   background-color: #e6ecf0;
 }
 
@@ -319,22 +357,6 @@ body {
   margin-top: 5px;
   -o-object-fit: cover;
      object-fit: cover;
-}
-
-.card .lead {
-  font-size: 1rem;
-}
-
-.card .card-title {
-  font-weight: 700;
-}
-
-.card-img-left {
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 82px;
-  height: 82px;
-  margin: 10px;
 }
 
 .profile-settings {

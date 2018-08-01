@@ -1,17 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import MessageList from '../containers/MessageList';
+import PostList from '../containers/PostList';
 import UserAside from './UserAside';
 
-const Homepage = ({user, isAuthenticated, allMessages}) => {
+const Homepage = ({user, isAuthenticated, allPosts}) => {
   document.title = 'Warbler';
   
   if(isAuthenticated) {
     return (
       <div className="row">
         <UserAside {...user} />
-        <div className="col-12 col-md-6">
-          <MessageList messages={allMessages} />
+        <div className="col-12 col-md-8 mt-2">
+          <PostList posts={allPosts} />
         </div>
       </div>
     );

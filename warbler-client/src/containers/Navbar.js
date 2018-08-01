@@ -39,6 +39,7 @@ class Navbar extends Component {
 
   logout = e => {
     e.preventDefault();
+    this.props.history.push('/');
     this.props.logout();
     this.setState({profileSettingsOpen: false});
   };
@@ -137,7 +138,7 @@ class Navbar extends Component {
                 </div>
               </li>
               <li>
-                <Link to={`/users/${user.id}/messages/new`}>
+                <Link to={`/users/${user.id}/posts/new`}>
                   New post
                 </Link>
               </li>

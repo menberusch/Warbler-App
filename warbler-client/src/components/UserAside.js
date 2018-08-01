@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultProfileImage from '../assets/images/default-profile-image.jpg';
 import {Link} from 'react-router-dom';
 
-const UserAside = ({username, profileImgUrl, messages}) => {
+const UserAside = ({username, name, profileImgUrl, posts}) => {
   return(<aside className="col-12 col-md-4 p-0">
     <div className="card flex-row">
       <Link to={`/${username}`} >
@@ -11,12 +11,15 @@ const UserAside = ({username, profileImgUrl, messages}) => {
         alt={username}
         className="card-img-left rounded-circle"/>
       </Link>
-      <Link to="/" className="user-posts p-2">
-        <span className="icon-messages"></span>
-        {messages.length}
-      </Link>
       <div className="card-body align-self-end p-2">
-          <span className="lead">@{username}</span>
+          <div>{name}</div>
+          <div className="lead">@{username}</div>
+      </div>
+      <div>
+        <Link to="/" className="user-posts-icon">
+          <span className="icon-messages"></span>
+          <div className="user-posts-icon__count">{posts.length}</div>
+        </Link>
       </div>
     </div>
   </aside>);

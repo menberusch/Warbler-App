@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TabContent, TabPane, Nav, NavItem, NavLink, Row, Col} from 'reactstrap';
 import classnames from 'classnames';
-import MessageList from '../containers/MessageList';
+import PostList from '../containers/PostList';
 import UserAside from './UserAside';
 
 class Profilepage extends Component {
@@ -21,7 +21,8 @@ class Profilepage extends Component {
   };
   
   render() {
-    const {user, userMessages} = this.props;
+    const {user, userPosts} = this.props;
+    console.log(user);
     return(
       <div className="row">
         <UserAside {...user}/>
@@ -48,7 +49,7 @@ class Profilepage extends Component {
             <TabPane tabId="posts">
               <Row>
                 <Col sm="12">
-                  <MessageList user={user} messages={userMessages} />
+                  <PostList user={user} posts={userPosts} />
                 </Col>
               </Row>
             </TabPane>

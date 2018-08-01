@@ -1,0 +1,31 @@
+.card .lead {
+  font-size: 1rem;
+}
+.card .card-title {
+  font-weight: 700;
+}
+.card-img-left {
+  object-fit: cover;
+  width: 82px;
+  height: 82px;
+  margin: 10px;
+}
+.user-posts-icon {
+  font-size: 24px;
+  position: relative;
+  margin: 10px 15px 0 0;
+  display: block;
+  &__count {
+    font-size: 14px;
+    font-weight: 500;
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
