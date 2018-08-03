@@ -265,20 +265,29 @@
 }
 
 .card .lead {
-  font-size: 1rem;
-}
+    font-size: 1rem;
+  }
 
 .card .card-title {
-  font-weight: 700;
-}
+    font-weight: 700;
+  }
+
+.card .card-body {
+    color: #000;
+  }
+
+.card .card-body:hover {
+    color: inherit;
+    text-decoration: none;
+  }
 
 .card-img-left {
-  -o-object-fit: cover;
-     object-fit: cover;
-  width: 82px;
-  height: 82px;
-  margin: 10px;
-}
+    -o-object-fit: cover;
+       object-fit: cover;
+    width: 82px;
+    height: 82px;
+    margin: 10px;
+  }
 
 .user-posts-icon {
   font-size: 24px;

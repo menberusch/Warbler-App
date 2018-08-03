@@ -14,7 +14,7 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
 
     async componentDidMount() {
       const {fetchUser, fetchPosts, currentUser, match} = this.props;
-      
+
       if(profilepage) {
         await fetchUser(match.params.username);
         document.title = `@${this.props.user.username} | Warbler`;
@@ -33,15 +33,17 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
     loadedProps = () => {
       const {currentUser, user, posts} = this.props;
 
-      if(currentUser.isAuthenticated) {
-        return profilepage ? {
+      if(profilepage) {
+        return {
           user: user,
           userPosts: user.posts
-        } : {
+        }
+      } else if(currentUser.isAuthenticated) {
+        return {
           isAuthenticated: currentUser.isAuthenticated,
           user: user,
           allPosts: posts
-        };
+        }
       } else {
         return {currentUser}
       }

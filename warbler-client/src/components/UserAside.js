@@ -11,12 +11,12 @@ const UserAside = ({username, name, profileImgUrl, posts}) => {
         alt={username}
         className="card-img-left rounded-circle"/>
       </Link>
-      <div className="card-body align-self-end p-2">
+      <Link to={`/${username}`} className="card-body align-self-end p-2">
           <div>{name}</div>
           <div className="lead">@{username}</div>
-      </div>
+      </Link>
       <div>
-        <Link to="/" className="user-posts-icon">
+        <Link to={`/${username}`} className="user-posts-icon">
           <span className="icon-messages"></span>
           <div className="user-posts-icon__count">{posts.length}</div>
         </Link>

@@ -1,14 +1,23 @@
-.card .lead {
-  font-size: 1rem;
-}
-.card .card-title {
-  font-weight: 700;
-}
-.card-img-left {
-  object-fit: cover;
-  width: 82px;
-  height: 82px;
-  margin: 10px;
+.card {
+  .lead {
+    font-size: 1rem;
+  }
+  .card-title {
+    font-weight: 700;
+  }
+  .card-body {
+    color: #000;
+  }
+  .card-body:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+  &-img-left {
+    object-fit: cover;
+    width: 82px;
+    height: 82px;
+    margin: 10px;
+  }
 }
 .user-posts-icon {
   font-size: 24px;
