@@ -1,39 +1,17 @@
 require('dotenv').config();
 
-const db = require('./models');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
-const authRoutes = require('./routes/auth');
-const postsRoutes = require('./routes/posts');
-const userRoutes = require('./routes/users');
-const {loginRequired, ensureCorrectUser} = require('./middleware/auth');
+const router = require('./routes');
 
 const PORT = 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
-
-// Routes here
-app.use('/api/auth', authRoutes);
-app.use('/api/users/:id/posts', loginRequired, ensureCorrectUser, postsRoutes);
-app.use('/api/user', userRoutes);
-
-app.get('/api/posts', loginRequired, async function(req, res, next) {
-  try {
-    let posts = await db.Post.find()
-    .sort({ createdAt: 'desc'})
-    .populate('user', {
-      username: true,
-      profileImgUrl: true
-    });
-    return res.status(200).json(posts);
-  } catch (err) {
-    return res.status(err);
-  }
-});
+app.use('/api', router);
 
 app.use((req,res,next) => {
   let err = new Error('Not Found');
