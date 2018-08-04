@@ -6,6 +6,7 @@ exports.getPosts = async function(req, res, next) {
     .sort({ createdAt: 'desc'})
     .populate('user', {
       username: true,
+      name: true,
       profileImgUrl: true
     });
     return res.status(200).json(posts);

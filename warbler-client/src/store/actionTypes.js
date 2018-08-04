@@ -5,3 +5,4 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const REMOVE_POST = 'REMOVE_POST';
 export const LOAD_USER_POSTS = 'LOAD_USER_POSTS'; 
 export const GET_USER = 'GET_USER';
+export const GET_USERS = 'GET_USERS';

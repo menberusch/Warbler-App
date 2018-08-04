@@ -28,7 +28,7 @@ export const fetchPosts = () => {
   };
 };
 
-export const postNewPost = text => (dispatch, getState) => {
+export const newPost = text => (dispatch, getState) => {
   let {currentUser} = getState();
   const id = currentUser.user.id;
   return apiCall('post', `/api/users/${id}/posts`, {text})

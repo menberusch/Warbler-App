@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {postNewPost} from '../store/actions/posts';
+import {newPost} from '../store/actions/posts';
 
 class PostForm extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class PostForm extends Component {
 
   handleNewPost = e => {
     e.preventDefault();
-    this.props.postNewPost(this.state.post);
+    this.props.newPost(this.state.post);
     this.setState({post: ''});
     this.props.history.push('/');
   };
@@ -45,4 +45,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {postNewPost})(PostForm);
+export default connect(mapStateToProps, {newPost})(PostForm);

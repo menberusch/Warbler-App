@@ -12,6 +12,7 @@ exports.createPost = async function(req, res, next) {
     let foundPost = await db.Post.findById(post.id).populate('user', {
       username: true,
       profileImgUrl: true,
+      name: true
     });
     return res.status(200).json(foundPost);
   } catch (err) {
