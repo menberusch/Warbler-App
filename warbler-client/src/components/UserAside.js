@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultProfileImage from '../assets/images/default-profile-image.jpg';
 import {Link} from 'react-router-dom';
 
-const UserAside = ({username, name, profileImgUrl, posts}) => {
+const UserAside = ({username, name, profileImgUrl, postsCount}) => {
   return(<aside className="col-12 col-md-4 p-0">
     <div className="card flex-row">
       <Link to={`/${username}`} >
@@ -18,7 +18,7 @@ const UserAside = ({username, name, profileImgUrl, posts}) => {
       <div>
         <Link to={`/${username}`} className="user-posts-icon">
           <span className="icon-messages"></span>
-          <div className="user-posts-icon__count">{posts.length}</div>
+          <div className="user-posts-icon__count">{postsCount}</div>
         </Link>
       </div>
     </div>

@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {removePost} from '../store/actions/posts';
 import PostItem from '../components/PostItem';
-import {fetchUser} from '../store/actions/users';
 
 class PostList extends Component {
 
   render() {
-    const {posts, user, removePost, currentUser, fetchUser} = this.props;
+    const {posts, user, removePost, currentUser} = this.props;
 
     const postList = posts.map(m => (
       <PostItem 
@@ -16,10 +15,7 @@ class PostList extends Component {
         text={m.text}
         username={m.user.username ? m.user.username : user.username}
         profileImgUrl={m.user.profileImgUrl || !user ? m.user.profileImgUrl : user.profileImgUrl}
-        removePost={()=>{
-          removePost(m.user._id ? m.user._id : user._id, m._id);
-          fetchUser(m.user.username ? m.user.username : user.username);
-        }}
+        removePost={removePost.bind(this, m.user._id ? m.user._id : user._id, m._id)}
         isCurrentUser={m.user._id ? 
           currentUser.id === m.user._id 
           :
@@ -41,4 +37,4 @@ function mapStateToProps(state) {
   };
 };
 
-export default connect(mapStateToProps, {removePost, fetchUser})(PostList);
+export default connect(mapStateToProps, {removePost})(PostList);

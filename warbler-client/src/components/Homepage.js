@@ -3,13 +3,13 @@ import {Link} from 'react-router-dom';
 import PostList from '../containers/PostList';
 import UserAside from './UserAside';
 
-const Homepage = ({user, isAuthenticated, allPosts}) => {
+const Homepage = ({user, isAuthenticated, allPosts, postsCount}) => {
   document.title = 'Warbler';
-  
+
   if(isAuthenticated) {
     return (
       <div className="row">
-        <UserAside {...user} />
+        <UserAside {...user} postsCount={postsCount} />
         <div className="col-12 col-md-8 mt-2">
           <PostList posts={allPosts} />
         </div>

@@ -21,11 +21,11 @@ class Profilepage extends Component {
   };
   
   render() {
-    const {user, userPosts} = this.props;
-    console.log(user);
+    const {user, userPosts, postsCount} = this.props;
+
     return(
       <div className="row">
-        <UserAside {...user}/>
+        <UserAside {...user} postsCount={postsCount}/>
         <div className="col-12 col-md-6">
           <Nav tabs>
             <NavItem>

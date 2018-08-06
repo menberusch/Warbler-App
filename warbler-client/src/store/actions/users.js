@@ -15,7 +15,7 @@ export const getUsers = users => ({
 
 export const fetchUser = username => {
   return dispatch => (
-    apiCall('get', `/api/users/${username}`)
+    apiCall('get', `/api/users/user/${username}`)
       .then(user => dispatch(getUser(user)))
       .catch(err => dispatch(addError(err)))  
   );
@@ -29,9 +29,9 @@ export const fetchUsers = () => {
   );
 };
 
-export const updateUser = (user_id) => {
+export const updateUser = (user_id, user_obj) => {
   return dispatch => (
-    apiCall('patch', `/api/users/${user_id}/update`)
+    apiCall('patch', `/api/users/user/${user_id}/update`, user_obj)
       .then(user => dispatch(currentUser(user)))
       .catch(err => dispatch(addError(err)))
   );

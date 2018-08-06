@@ -36,13 +36,15 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
       if(profilepage) {
         return {
           user: user,
-          userPosts: user.posts
+          userPosts: posts.filter(post => post.user._id === currentUser.user.id),
+          postsCount: posts.length
         }
       } else if(currentUser.isAuthenticated) {
         return {
           isAuthenticated: currentUser.isAuthenticated,
           user: user,
-          allPosts: posts
+          allPosts: posts,
+          postsCount: posts.length
         }
       } else {
         return {currentUser}
