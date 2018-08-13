@@ -1,7 +1,7 @@
 import {apiCall} from '../../services/api';
 import {addError} from './errors';
 import {GET_USER, GET_USERS} from '../actionTypes';
-import currentUser from '../reducers/currentUser';
+import {setAuthorizationToken, setCurrentUser} from './auth';
 
 export const getUser = user => ({
   type: GET_USER,
@@ -32,7 +32,11 @@ export const fetchUsers = () => {
 export const updateUser = (user_id, user_obj) => {
   return dispatch => (
     apiCall('patch', `/api/users/user/${user_id}/update`, user_obj)
-      .then(user => dispatch(currentUser(user)))
+      .then(({token, ...user}) => {
+        localStorage.setItem('jwtToken', token);
+        setAuthorizationToken(token);
+        dispatch(setCurrentUser(user))
+      })
       .catch(err => dispatch(addError(err)))
   );
 };

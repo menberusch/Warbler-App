@@ -1,4 +1,5 @@
 const db = require('../models');
+const jwt = require('jsonwebtoken');
 
 exports.getUser = async function(req, res, next) {
   try {
@@ -15,9 +16,12 @@ exports.getUser = async function(req, res, next) {
 exports.updateUser = async function(req, res, next) {
   try {
     let user = await db.User.findByIdAndUpdate(req.params.user_id, {$set: req.body}, {new: true});
-    let {username, _id, posts, profileImgUrl, name, birthday} = user;
+    let {username, id, posts, email, profileImgUrl, name, birthday} = user;
+    let token = jwt.sign({
+      id, username, email, name, profileImgUrl, posts, birthday
+    }, process.env.SECRET_KEY);
     return res.status(200).json({
-      _id, username, name, profileImgUrl, birthday, posts
+      id, username, email, name, profileImgUrl, birthday, posts, token
     });
   } catch (err) {
     return next(err);
