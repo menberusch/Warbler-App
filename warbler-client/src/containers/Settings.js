@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import {connect} from 'react-redux';
 import {updateUser} from '../store/actions/users'
 
@@ -10,7 +11,7 @@ class Settings extends Component {
       username, 
       email, 
       name: name ? name : '', 
-      birthday: birthday ? birthday : ''
+      birthday: birthday ? moment(birthday).format('MM-DD-YY') : ''
     };
 
     document.title = 'Warbler / Settings';
@@ -24,14 +25,15 @@ class Settings extends Component {
       email: newEmail, 
       name: newName, 
       profileImg: newProfileImg, 
-      birthday: newBirtday
+      birthday: newBirthday
     } = this.state;
     let user_obj = {};
 
     if(username !== newUsername) user_obj.username = newUsername;
     if(email !== newEmail) user_obj.email = newEmail;
     if(name !== newName) user_obj.name = newName;
-    this.props.updateUser(id, user_obj);
+    if(birthday !== newBirthday) user_obj.birthday = newBirthday;
+    if(!!Object.keys(user_obj).length) this.props.updateUser(id, user_obj);
   }
 
   handleChange = e => {
@@ -42,6 +44,7 @@ class Settings extends Component {
 
   render() {
     const {username, email, name, birthday} = this.state;
+    console.log(typeof birthday);
     return (
       <div>
         <h1>Edit your profile</h1>
