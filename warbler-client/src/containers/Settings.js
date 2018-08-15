@@ -11,7 +11,7 @@ class Settings extends Component {
       username, 
       email, 
       name: name ? name : '', 
-      birthday: birthday ? moment(birthday).format('MM-DD-YY') : ''
+      birthday: birthday ? moment(birthday).format('YYYY-MM-DD') : ''
     };
 
     document.title = 'Warbler / Settings';
@@ -44,7 +44,6 @@ class Settings extends Component {
 
   render() {
     const {username, email, name, birthday} = this.state;
-    console.log(typeof birthday);
     return (
       <div>
         <h1>Edit your profile</h1>

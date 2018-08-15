@@ -8,9 +8,9 @@ export function setTokenHeader(token) {
   }
 };
 
-export function apiCall(method, path, data) {
+export function apiCall(method, path, data, config) {
   return new Promise((resolve, rej) => {
-    return axios[method.toLowerCase()](path, data)
+    return axios[method.toLowerCase()](path, data, config)
     .then(res => {
       return resolve(res.data);
     })

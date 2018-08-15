@@ -30,8 +30,9 @@ export const fetchUsers = () => {
 };
 
 export const updateUser = (user_id, user_obj) => {
+  let config = {headers: {'Content-Type': 'multipart/form-data'}}
   return dispatch => (
-    apiCall('patch', `/api/users/user/${user_id}/update`, user_obj)
+    apiCall('patch', `/api/users/user/${user_id}/update`, user_obj, config)
       .then(({token, ...user}) => {
         localStorage.setItem('jwtToken', token);
         setAuthorizationToken(token);
