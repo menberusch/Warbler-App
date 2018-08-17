@@ -10,7 +10,7 @@ class Settings extends Component {
     this.state = {
       username, 
       email, 
-      name: name ? name : '', 
+      name: name ? name : '',
       birthday: birthday ? moment(birthday).format('YYYY-MM-DD') : ''
     };
 
@@ -19,12 +19,11 @@ class Settings extends Component {
 
   updateProfile = e => {
     e.preventDefault();
-    const {id, username, email, name, profileImg, birthday} = this.props.currentUser.user;
+    const {id, username, email, name, birthday} = this.props.currentUser.user;
     const {
       username: newUsername, 
       email: newEmail, 
-      name: newName, 
-      profileImg: newProfileImg, 
+      name: newName,
       birthday: newBirthday
     } = this.state;
     let user_obj = {};
@@ -82,10 +81,6 @@ class Settings extends Component {
               name="name" 
               id="edit_name" 
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="edit_profileImg">Profile image</label>
-            <input type="file" name="profileImg" id="edit_profileImg"/>
           </div>
           <div className="form-group">
             <label htmlFor="edit_birthday">Birthday</label>

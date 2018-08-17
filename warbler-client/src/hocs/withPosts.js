@@ -19,7 +19,7 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
         await fetchUser(match.params.username);
         document.title = `@${this.props.user.username} | Warbler`;
         this.setState({isLoading: false});
-        
+          
       } else if(currentUser.isAuthenticated){
         await fetchPosts();
         await fetchUser(currentUser.user.username);
@@ -35,14 +35,14 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
 
       if(profilepage) {
         return {
-          user: user,
-          userPosts: posts.filter(post => post.user._id === currentUser.user.id),
-          postsCount: posts.length
+          user,
+          userPosts: user.posts,
+          postsCount: user.posts.length
         }
       } else if(currentUser.isAuthenticated) {
         return {
           isAuthenticated: currentUser.isAuthenticated,
-          user: user,
+          user,
           allPosts: posts,
           postsCount: posts.length
         }
@@ -60,7 +60,7 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
       let componentProps;
 
       if(!isLoading) componentProps = this.loadedProps();
-      
+
       return(
         <div>
           {isLoading ? (

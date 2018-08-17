@@ -4,7 +4,7 @@ import {removePost} from '../store/actions/posts';
 import PostItem from '../components/PostItem';
 
 class PostList extends Component {
-
+  
   render() {
     const {posts, user, removePost, currentUser} = this.props;
 
