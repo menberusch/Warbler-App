@@ -38,9 +38,8 @@
   .underline {
     height: 3px;
     background-color: transparent;
-    margin-top: 2px;
     position: absolute;
-    bottom: -9px;
+    bottom: -10px;
     left: 0;
     width: 100%;
     transition: all .15s ease-out;

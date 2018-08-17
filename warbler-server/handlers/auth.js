@@ -6,7 +6,7 @@ exports.signup = async function(req, res, next) {
     if(req.body.username === 'signin' || req.body.username === 'signup' || req.body.username === 'settings')
       throw new Error("You can't use this username.");
     let user = await db.User.create(req.body);
-    let {id, username, name, profileImgUrl, posts, birthday} = user;
+    let {id, email, username, name, profileImgUrl, posts, birthday} = user;
     let token = jwt.sign(
       { 
         id, username, email, name, profileImgUrl, posts, birthday

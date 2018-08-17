@@ -39,7 +39,6 @@ export default class AuthForm extends Component {
   render() {
     const {email, username} = this.state;
     const {heading, buttonText, signUp, errors} = this.props;
-
     return(
       <div>
         <div className="row justify-content-md-center text-center">
