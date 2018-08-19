@@ -16,10 +16,11 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
       const {fetchUser, fetchPosts, currentUser, match} = this.props;
 
       if(profilepage) {
+        if(currentUser.isAuthenticated) await fetchPosts();
+
         await fetchUser(match.params.username);
-        document.title = `@${this.props.user.username} | Warbler`;
         this.setState({isLoading: false});
-          
+
       } else if(currentUser.isAuthenticated){
         await fetchPosts();
         await fetchUser(currentUser.user.username);
@@ -30,22 +31,36 @@ export default function withPosts(ComponentToBeRendered, profilepage=false) {
       }      
     };
 
+    getUserPosts = (allPosts, user_id) => allPosts.filter(post => post.user._id === user_id)
+
     loadedProps = () => {
       const {currentUser, user, posts} = this.props;
+      
+      if(user.errorMsg) {
+        return {errorMsg: user.errorMsg}
+      } else if(profilepage) {
+        let profilePageProps = {user, currentUser}; 
 
-      if(profilepage) {
-        return {
-          user,
-          userPosts: user.posts,
-          postsCount: user.posts.length
+        if(currentUser.isAuthenticated) {
+          let userPosts = this.getUserPosts(posts, user._id);
+          profilePageProps.userPosts = userPosts;
+          profilePageProps.postsCount = userPosts.length;
+
+        } else {
+          profilePageProps.userPosts = user.posts;
+          profilePageProps.postsCount = user.posts.length;
         }
+
+        return profilePageProps;
+
       } else if(currentUser.isAuthenticated) {
         return {
-          isAuthenticated: currentUser.isAuthenticated,
+          currentUser,
           user,
           allPosts: posts,
-          postsCount: posts.length
+          postsCount: this.getUserPosts(posts, user._id).length
         }
+
       } else {
         return {currentUser}
       }

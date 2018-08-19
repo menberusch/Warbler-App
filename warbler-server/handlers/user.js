@@ -4,10 +4,17 @@ const jwt = require('jsonwebtoken');
 exports.getUser = async function(req, res, next) {
   try {
     let user = await db.User.find(req.params).populate('posts');
-    let {username, name, birthday, _id, posts, profileImgUrl} = user[0];
-    return res.status(200).json({
-      _id, username, name, profileImgUrl, birthday, posts
-    });
+    if(user.length) {
+      const {username, name, birthday, _id, posts, profileImgUrl} = user[0];
+      return res.status(200).json({
+        _id, username, name, profileImgUrl, birthday, posts
+      });
+    } else {
+      console.log(req.params);
+      return res.status(200).json({
+        errorMsg: `Can't find page of ${req.params.username}...`
+      });
+    }
   } catch (err) {
     return next(err);
   }

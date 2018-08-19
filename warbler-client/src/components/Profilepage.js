@@ -10,6 +10,7 @@ class Profilepage extends Component {
     this.state = {
       activeTab: 'posts'
     };
+    if(!props.errorMsg) document.title = `@${props.user.username} | Warbler`;
   };
 
   toggleTab(tab) {
@@ -21,49 +22,56 @@ class Profilepage extends Component {
   };
   
   render() {
-    const {user, userPosts, postsCount} = this.props;
-
-    return(
-      <div className="row">
-        <UserAside {...user} postsCount={postsCount}/>
-        <div className="col-12 col-md-6">
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({active: this.state.activeTab === 'posts'})}
-                onClick={() => {this.toggleTab('posts')}}
-              >
-                Posts
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({active: this.state.activeTab === 'following'})}
-                onClick={() => {this.toggleTab('following')}}
-              >
-                Following
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="posts">
-              <Row>
-                <Col sm="12">
-                  <PostList user={user} posts={userPosts} />
-                </Col>
-              </Row>
-            </TabPane>
-            <TabPane tabId="following">
-              <Row>
-                <Col sm="12">
-                  <h4>You are not following anyone...</h4>
-                </Col>
-              </Row>
-            </TabPane>
-          </TabContent>
+    if(this.props.errorMsg) {
+      const {errorMsg} = this.props;
+      return (
+        <h1>{errorMsg}</h1>
+      );
+      
+    } else {
+      const {user, userPosts, postsCount, currentUser} = this.props;
+      return (
+        <div className="row">
+          <UserAside {...user} currentUser={currentUser} postsCount={postsCount}/>
+          <div className="col-12 col-md-6">
+            <Nav tabs>
+              <NavItem>
+                <NavLink
+                  className={classnames({active: this.state.activeTab === 'posts'})}
+                  onClick={() => {this.toggleTab('posts')}}
+                >
+                  Posts
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({active: this.state.activeTab === 'following'})}
+                  onClick={() => {this.toggleTab('following')}}
+                >
+                  Following
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <TabContent activeTab={this.state.activeTab}>
+              <TabPane tabId="posts">
+                <Row>
+                  <Col sm="12">
+                    <PostList user={user} posts={userPosts} />
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tabId="following">
+                <Row>
+                  <Col sm="12">
+                    <h4>You are not following anyone...</h4>
+                  </Col>
+                </Row>
+              </TabPane>
+            </TabContent>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   };
 };
 

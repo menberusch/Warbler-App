@@ -1,9 +1,10 @@
 import React from 'react';
 import DefaultProfileImage from '../assets/images/default-profile-image.jpg';
+import UploadPhoto from './UploadPhoto';
 import {Link} from 'react-router-dom';
 
-const UserAside = ({username, name, profileImgUrl, postsCount}) => {
-  return(<aside className="col-12 col-md-4 p-0">
+const UserAside = ({username, name, profileImgUrl, postsCount, currentUser}) => (
+  <aside className="col-12 col-md-4 p-0">
     <div className="card flex-row">
       <div className="card-img-wrapper">
         <Link to={`/${username}`} >
@@ -12,10 +13,7 @@ const UserAside = ({username, name, profileImgUrl, postsCount}) => {
           alt={username}
           className="card-img-left rounded-circle"/>
         </Link>
-        {/* Edit image icon if it is current user profile page */}
-        <span className="edit">
-
-        </span>
+        {currentUser.isAuthenticated && (<UploadPhoto />)}
       </div>
       <Link to={`/${username}`} className="card-body align-self-end p-2">
           <div>{name}</div>
@@ -28,7 +26,7 @@ const UserAside = ({username, name, profileImgUrl, postsCount}) => {
         </Link>
       </div>
     </div>
-  </aside>);
-};
+  </aside>
+);
 
 export default UserAside;

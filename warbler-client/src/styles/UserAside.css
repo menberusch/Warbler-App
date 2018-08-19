@@ -38,3 +38,10 @@
     text-decoration: none;
   }
 }
+
+.edit-profile-img {
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  position: absolute;
+}
