@@ -2,6 +2,7 @@
 @import 'Navbar';
 @import 'loader';
 @import 'UserAside';
+@import 'UploadPhoto';
 
 body {
   background-color: #e6ecf0;

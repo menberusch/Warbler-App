@@ -41,7 +41,8 @@
 
 .edit-profile-img {
   cursor: pointer;
-  font-size: 20px;
-  color: #333;
+  font-size: 18px;
+  color: #000;
   position: absolute;
+  transform: translate(-18px, 6px);
 }
