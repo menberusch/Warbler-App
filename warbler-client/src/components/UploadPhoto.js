@@ -116,12 +116,11 @@ class UploadPhoto extends Component {
                   onDragOver={e => e.preventDefault()}
                 >
                   <span>Click here to upload or <b>drag-n-drop</b> an image...</span>
-                  <div 
-                    style={{
-                      backgroundImage: `url(${imgURL})`
-                    }}
-                    id="upload_img_preview">
-                  </div>
+                  <img
+                    src={imgURL} 
+                    id="upload_img_preview"
+                    className={`upload-image-container--img-preview ${imgURL ? '' : 'd-none'}`}
+                  />
                   <input type="file" id="upload_image_file" accept="image/png, image/jpeg"/>
                 </label>
                 <p className={`alert w-100 alert-danger ${errorMsg ? '' : 'd-none'}`}>{errorMsg}</p>
