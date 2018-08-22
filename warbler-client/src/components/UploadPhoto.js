@@ -58,9 +58,39 @@ class UploadPhoto extends Component {
 
   handleUploadedFile(file) {
     let reader = new FileReader();
-    reader.onload = e => (this.setState({
-      imgURL: e.target.result
-    }));
+    // reader.onload = e => (this.setState({
+    //   imgURL: e.target.result
+    // }));
+
+    reader.onload = e => {
+      var image = new Image();
+      image.onload = () => {
+        // Resize the image
+        var canvas = document.createElement('canvas'),
+            max_size = 1000,// TODO : pull max size from a site config
+            width = image.width,
+            height = image.height;
+        if (width > height) {
+          if (width > max_size) {
+            height *= max_size / width;
+            width = max_size;
+          }
+        } else {
+          if (height > max_size) {
+            width *= max_size / height;
+            height = max_size;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+        var dataUrl = canvas.toDataURL('image/png');
+        this.setState({
+          imgURL: dataUrl
+        });
+      }
+      image.src = e.target.result;
+    }
     reader.readAsDataURL(file);
   }
 
