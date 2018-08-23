@@ -67,7 +67,7 @@ class UploadPhoto extends Component {
       image.onload = () => {
         // Resize the image
         var canvas = document.createElement('canvas'),
-            max_size = 1000,// TODO : pull max size from a site config
+            max_size = 350,// TODO : pull max size from a site config
             width = image.width,
             height = image.height;
         if (width > height) {
@@ -104,17 +104,19 @@ class UploadPhoto extends Component {
     }
 
     let file = e.dataTransfer.files[0];
-    e.target.files[0] = file;
 
-    if(this.checkFileProperties(file, e.target)){
-      this.handleUploadedFile(file);
+    if(e.target.files) {
+      e.target.files[0] = file;
+
+      if(file && this.checkFileProperties(file, e.target)){
+        this.handleUploadedFile(file);
+      }
     }
   }
 
   onChangeUploadImg = e => {
     let file = e.target.files[0];
-
-    if(this.checkFileProperties(file, e.target)){
+    if(file && this.checkFileProperties(file, e.target)){
       this.handleUploadedFile(file);
     }
   }
@@ -138,21 +140,19 @@ class UploadPhoto extends Component {
             <ModalHeader>Change your profile photo</ModalHeader>
             <ModalBody>
               <form className="upload-image-form">
-                <label 
-                  htmlFor="upload_image_file" 
-                  className="lead upload-image-container"
-                  onChange={this.onChangeUploadImg}
-                  onDrop={this.onDropUploadImg}
-                  onDragOver={e => e.preventDefault()}
-                >
-                  <span>Click here to upload or <b>drag-n-drop</b> an image...</span>
-                  <img
-                    src={imgURL} 
-                    id="upload_img_preview"
-                    className={`upload-image-container--img-preview ${imgURL ? '' : 'd-none'}`}
-                  />
-                  <input type="file" id="upload_image_file" accept="image/png, image/jpeg"/>
-                </label>
+                <div>
+                  <label 
+                    htmlFor="upload_image_file" 
+                    className={`lead upload-image-container ${ imgURL ? 'preview-photo' : ''}`}
+                    onChange={this.onChangeUploadImg}
+                    onDrop={this.onDropUploadImg}
+                    onDragOver={e => e.preventDefault()}
+                  >
+                    <span>Click here to upload or <b>drag-n-drop</b> an image...</span>
+                    <img src={imgURL} alt="Your Name"/>
+                    <input type="file" id="upload_image_file" accept="image/png, image/jpeg"/>
+                  </label>
+                </div>
                 <p className={`alert w-100 alert-danger ${errorMsg ? '' : 'd-none'}`}>{errorMsg}</p>
                 <span className="clear-img"></span>
                 <div className="form-group">
