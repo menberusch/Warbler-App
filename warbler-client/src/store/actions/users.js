@@ -40,3 +40,13 @@ export const updateUser = (user_id, user_obj) => {
       .catch(err => dispatch(addError(err)))
   );
 };
+
+export const uploadProfileImg = (image, imageName, user_id) => {
+  return dispatch => (
+    apiCall('post', `/api/users/user/${user_id}/upload_image`, {image, imageName})
+      .then(({imagePath}) => {
+        return imagePath;
+      })
+      .catch(err => dispatch(addError(err)))
+  );
+}

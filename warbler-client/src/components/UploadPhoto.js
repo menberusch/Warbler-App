@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Tooltip, Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
 import AvatarEditor from 'react-avatar-editor';
-import {apiCall} from '../services/api';
+import {uploadProfileImg, updateUser} from '../store/actions/users';
 
 class UploadPhoto extends Component {
   constructor(props){
@@ -12,6 +13,7 @@ class UploadPhoto extends Component {
       clearImgTooltipOpen: false,
       errorMsg: '',
       imgURL: '',
+      imgName: '',
       fileInputKey: '',
       scale: 1,
       imgCropPosition: {x: 0.5, y: 0.5}
@@ -51,18 +53,17 @@ class UploadPhoto extends Component {
     });
   }
   savePhotoChanges = e => {
-    // this.toggleEditImgModal();
     const editorCanvas = this.editor.getImageScaledToCanvas();
-    const editedImg = editorCanvas.toDataURL('image/png');
-    apiCall('post', '/api/users/user/upload_img', {
-      imgFile: editedImg,
-      username: this.props.username
-    });
+    const editedImg = editorCanvas.toDataURL();
+    const {currentUser, uploadProfileImg, updateUser} = this.props;
+
+    uploadProfileImg(editedImg, this.state.imgName, currentUser.user.id)
+      .then(imagePath => updateUser(currentUser.user.id, {profileImgUrl: imagePath}));
   }
   clearImg = () => {
     this.setState({
       imgURL: '',
-      fileInputKey: '',
+      imgName: '',
       scale: 1,
       clearImgTooltipOpen: false,
       imgCropPosition: {x: 0.5, y: 0.5}
@@ -98,7 +99,7 @@ class UploadPhoto extends Component {
     reader.onload = e => {
       this.setState({
         imgURL: e.target.result,
-        fileInputKey: file.name
+        imgName: new Date().getTime() + file.name
       });
     }
     reader.readAsDataURL(file);
@@ -132,8 +133,8 @@ class UploadPhoto extends Component {
       clearImgTooltipOpen,
       errorMsg,
       imgURL,
+      imgName,
       scale,
-      fileInputKey,
       imgCropPosition
     } = this.state;
     return(
@@ -183,11 +184,11 @@ class UploadPhoto extends Component {
                   onDrop={this.onDropUploadImg}
                   onDragOver={e => e.preventDefault()}
                 >
-                  <input key={fileInputKey} type="file" id="upload_image_file" accept="image/png, image/jpeg"/>
+                  <input key={imgName} type="file" id="upload_image_file" accept="image/png, image/jpeg"/>
                 </label>
               </div>
               <p className={`alert w-100 alert-danger ${errorMsg ? '' : 'd-none'}`}>{errorMsg}</p>
-              <div className={`resize-img-slider px-2 ${ imgURL ? '' : 'd-none'}`}>
+              <div className={`resize-img-slider px-2 ${imgURL ? '' : 'd-none'}`}>
                 <span className="icon-zoom-out-outline"></span>
                 <input onChange={this.handleResize} type="range" step="0.01" min="1" max="2" name="scale" value={scale}/>
                 <span className="icon-zoom-in-outline"></span>
@@ -207,4 +208,10 @@ class UploadPhoto extends Component {
   }
 }
 
-export default UploadPhoto;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  };
+}
+
+export default connect(mapStateToProps, {uploadProfileImg, updateUser})(UploadPhoto);
