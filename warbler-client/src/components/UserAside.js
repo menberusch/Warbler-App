@@ -13,7 +13,7 @@ const UserAside = ({username, name, profileImgUrl, postsCount, currentUser}) => 
           alt={username}
           className="card-img-left rounded-circle"/>
         </Link>
-        {currentUser.isAuthenticated && (<UploadPhoto name={name}/>)}
+        {currentUser.isAuthenticated && (<UploadPhoto username={currentUser.user.username}/>)}
       </div>
       <Link to={`/${username}`} className="card-body align-self-end p-2">
           <div>{name}</div>

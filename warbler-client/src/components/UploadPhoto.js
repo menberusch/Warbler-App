@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tooltip, Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
 import AvatarEditor from 'react-avatar-editor';
+import {apiCall} from '../services/api';
 
 class UploadPhoto extends Component {
   constructor(props){
@@ -11,7 +12,6 @@ class UploadPhoto extends Component {
       clearImgTooltipOpen: false,
       errorMsg: '',
       imgURL: '',
-      croppedImg: '',
       fileInputKey: '',
       scale: 1,
       imgCropPosition: {x: 0.5, y: 0.5}
@@ -52,10 +52,11 @@ class UploadPhoto extends Component {
   }
   savePhotoChanges = e => {
     // this.toggleEditImgModal();
-    const canvasScaled = this.editor.getImageScaledToCanvas();
-    const newImgScaled = canvasScaled.toDataURL('image/png')
-    this.setState({
-      croppedImg: newImgScaled
+    const editorCanvas = this.editor.getImageScaledToCanvas();
+    const editedImg = editorCanvas.toDataURL('image/png');
+    apiCall('post', '/api/users/user/upload_img', {
+      imgFile: editedImg,
+      username: this.props.username
     });
   }
   clearImg = () => {
@@ -94,7 +95,6 @@ class UploadPhoto extends Component {
   }
   handleUploadedFile(file) {
     let reader = new FileReader();
-
     reader.onload = e => {
       this.setState({
         imgURL: e.target.result,
@@ -134,8 +134,7 @@ class UploadPhoto extends Component {
       imgURL,
       scale,
       fileInputKey,
-      imgCropPosition,
-      croppedImg
+      imgCropPosition
     } = this.state;
     return(
         <span 
@@ -153,7 +152,6 @@ class UploadPhoto extends Component {
           <Modal isOpen={editProfileImgModal} toggle={this.toggleEditImgModal} backdrop="static">
             <ModalHeader>Change your profile photo</ModalHeader>
             <ModalBody>
-              <img src={croppedImg} alt="safas"/>
               <div className={`lead upload-image-container ${ imgURL ? 'preview-photo' : ''}`}>
                 <span>Click here to upload or <b>drag-n-drop</b> an image...</span>
                 {imgURL && 
@@ -190,7 +188,9 @@ class UploadPhoto extends Component {
               </div>
               <p className={`alert w-100 alert-danger ${errorMsg ? '' : 'd-none'}`}>{errorMsg}</p>
               <div className={`resize-img-slider px-2 ${ imgURL ? '' : 'd-none'}`}>
+                <span className="icon-zoom-out-outline"></span>
                 <input onChange={this.handleResize} type="range" step="0.01" min="1" max="2" name="scale" value={scale}/>
+                <span className="icon-zoom-in-outline"></span>
               </div>
             </ModalBody>
             <ModalFooter>

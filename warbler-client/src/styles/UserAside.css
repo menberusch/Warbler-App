@@ -22,7 +22,7 @@
 .user-posts-icon {
   font-size: 24px;
   position: relative;
-  margin: 10px 15px 0 0;
+  margin: 4px 15px 0 0;
   display: block;
   &__count {
     font-size: 14px;
@@ -44,5 +44,6 @@
   font-size: 18px;
   color: #000;
   position: absolute;
-  transform: translate(-18px, 6px);
+  left: 108px;
+  top: 9px;
 }
