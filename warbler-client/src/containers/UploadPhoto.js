@@ -7,16 +7,16 @@ import {uploadProfileImg, updateUser} from '../store/actions/users';
 class UploadPhoto extends Component {
   constructor(props){
     super(props);
+    const imgName = this.getImageName(props.user.profileImgUrl);
     this.state = {
       editProfileImgModal: false,
       editProfileImgTooltipOpen: false,
       clearImgTooltipOpen: false,
       errorMsg: '',
-      imgURL: '',
-      imgName: '',
-      fileInputKey: '',
-      scale: 1,
-      imgCropPosition: {x: 0.5, y: 0.5}
+      imgURL: props.user.profileImgUrl,
+      imgName,
+      imageIsChanged: false,
+      scale: 1
     };
   }
 
@@ -43,34 +43,46 @@ class UploadPhoto extends Component {
     this.setState({
       scale: parseFloat(e.target.value)
     });
+    if(!this.state.imageIsChanged) this.changeImageForSave();
   }
-  getImagePosition = position => {
+  changeImageForSave = () => {
     this.setState({
-      imgCropPosition: {
-        x: position.x,
-        y: position.y
-      }
+      imageIsChanged: !this.state.imageIsChanged
     });
   }
-  savePhotoChanges = e => {
-    const editorCanvas = this.editor.getImageScaledToCanvas();
-    const editedImg = editorCanvas.toDataURL();
-    const {currentUser, uploadProfileImg, updateUser} = this.props;
+  savePhotoChanges = () => {
+    const {user, uploadProfileImg, updateUser} = this.props;
+    let imgName, editedImg = null;
+    
+    if(this.editor) {
+      const editorCanvas = this.editor.getImageScaledToCanvas();
+      editedImg = editorCanvas.toDataURL();
+      imgName = new Date().getTime() + this.state.imgName;
+    }
 
-    uploadProfileImg(editedImg, this.state.imgName, currentUser.user.id)
-      .then(imagePath => updateUser(currentUser.user.id, {profileImgUrl: imagePath}));
+    uploadProfileImg(user.profileImgUrl, editedImg, imgName, user.id)
+      .then(imagePath => updateUser(user.id, {profileImgUrl: imagePath}));
   }
   clearImg = () => {
     this.setState({
       imgURL: '',
       imgName: '',
       scale: 1,
-      clearImgTooltipOpen: false,
-      imgCropPosition: {x: 0.5, y: 0.5}
+      imageIsChanged: true,
+      clearImgTooltipOpen: false
     });
   }
+  getImageName = profileImgUrl => (
+    profileImgUrl ? profileImgUrl.slice(profileImgUrl.lastIndexOf('/') + 1, profileImgUrl.length) : ''
+  )
   cancelPhotoChanges = () => {
-    this.clearImg();
+    const {user} = this.props;
+    this.setState({
+      imgURL: user.profileImgUrl,
+      imgName: this.getImageName(user.profileImgUrl),
+      imageIsChanged: false,
+      scale: 1
+    });
     this.toggleEditImgModal();
   }
   checkFileProperties = file => {
@@ -96,10 +108,12 @@ class UploadPhoto extends Component {
   }
   handleUploadedFile(file) {
     let reader = new FileReader();
+    let imgName = file.name.replace(/\s\//g, '');
     reader.onload = e => {
       this.setState({
         imgURL: e.target.result,
-        imgName: new Date().getTime() + file.name
+        imageIsChanged: true,
+        imgName
       });
     }
     reader.readAsDataURL(file);
@@ -135,8 +149,9 @@ class UploadPhoto extends Component {
       imgURL,
       imgName,
       scale,
-      imgCropPosition
+      imageIsChanged
     } = this.state;
+
     return(
         <span 
           className="edit-profile-img" 
@@ -165,8 +180,6 @@ class UploadPhoto extends Component {
                       height={250}
                       color={[255, 255, 255, 0.85]}
                       scale={scale}
-                      onPositionChange={this.getImagePosition}
-                      position={imgCropPosition}
                     />
                   </div>
                 }
@@ -198,7 +211,7 @@ class UploadPhoto extends Component {
               <button className="btn btn-secondary" onClick={this.cancelPhotoChanges}>Cancel</button>
               <button 
                 className="btn btn-primary"
-                disabled={imgURL ? false : true}
+                disabled={imageIsChanged ? false : true}
                 onClick={this.savePhotoChanges}
               >Save</button>
             </ModalFooter> 
@@ -210,7 +223,7 @@ class UploadPhoto extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    user: state.currentUser.user
   };
 }
 

@@ -41,9 +41,9 @@ export const updateUser = (user_id, user_obj) => {
   );
 };
 
-export const uploadProfileImg = (image, imageName, user_id) => {
+export const uploadProfileImg = (prevImage, image, imageName, user_id) => {
   return dispatch => (
-    apiCall('post', `/api/users/user/${user_id}/upload_image`, {image, imageName})
+    apiCall('post', `/api/users/user/${user_id}/upload_image`, {prevImage, image, imageName})
       .then(({imagePath}) => {
         return imagePath;
       })
