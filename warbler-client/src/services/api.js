@@ -15,6 +15,7 @@ export function apiCall(method, path, data, config) {
       return resolve(res.data);
     })
     .catch(err => {
+      console.log(err.response.data);
       return rej(err.response.data.error);
     })
   })

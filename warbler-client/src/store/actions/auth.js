@@ -33,7 +33,8 @@ export function authUser(type, userData) {
         resolve();
       })
       .catch(err => {
-        dispatch(addError(err.message));
+        if(err) dispatch(addError(err.message));
+        else dispatch(addError(err));
         rej();
       })
     });

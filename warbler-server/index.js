@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./handlers/error');
 const router = require('./routes');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.static('public'));
 app.use(cors());
